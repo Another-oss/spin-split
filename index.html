@@ -3,265 +3,553 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spin & Split 2.0</title>
+<title>Spin & Split | Random Group Generator</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #090611;
+  --panel: #171027;
+  --purple: #8b35ff;
+  --pink: #ff4fa3;
+  --cyan: #42e8ff;
+  --text: #f8f4ff;
+  --muted: #aaa0c5;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  color: white;
-  background: linear-gradient(135deg, #101827, #202c45);
+  font-family: 'Poppins', sans-serif;
+  background:
+    radial-gradient(circle at 15% 15%, #35106c 0, transparent 35%),
+    radial-gradient(circle at 90% 80%, #23105a 0, transparent 30%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-}
-
-h1 {
-  text-align: center;
-  color: #65e8ff;
-}
-
-.card {
-  background: #172235;
-  padding: 20px;
-  border-radius: 18px;
-  margin-bottom: 20px;
-  box-shadow: 0 5px 20px #0004;
-}
-
-label {
-  display: block;
-  margin: 12px 0 6px;
-}
-
-textarea, input, select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #40516d;
-  background: #0d1523;
-  color: white;
-  font-size: 16px;
-}
-
-textarea {
-  min-height: 180px;
-  resize: vertical;
+button, input, textarea {
+  font: inherit;
 }
 
 button {
-  border: none;
-  padding: 13px 18px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 15px;
   cursor: pointer;
-  margin-top: 10px;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: .45;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.primary {
-  background: #00c8a0;
-  color: #061b19;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 5%;
+  border-bottom: 1px solid #ffffff12;
+  gap: 15px;
 }
 
-.secondary {
-  background: #334765;
-  color: white;
-}
-
-.sound {
+.brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
 }
 
-.sound input {
-  width: auto;
+.logo {
+  width: 55px;
+  height: 55px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a855ff, #5420e8);
+  box-shadow: 0 0 25px #873dff80;
+  font-size: 28px;
+}
+
+.brand h1 {
+  font-size: clamp(23px, 4vw, 38px);
+  margin: 0;
+  font-weight: 800;
+}
+
+.brand h1 span {
+  color: #b66cff;
+}
+
+.brand p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sound-btn {
+  border: 1px solid #6940a5;
+  background: #211438;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 18px;
+}
+
+main {
+  width: min(1200px, 94%);
+  margin: 30px auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 25px;
+  align-items: start;
+}
+
+.panel {
+  background: linear-gradient(145deg, #1c1231, #100b1d);
+  border: 1px solid #7134b5;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 10px 35px #0005;
+}
+
+.wheel-panel {
+  text-align: center;
+}
+
+.wheel-title {
+  margin: 0 0 20px;
+  color: #d8c4ff;
+  font-size: 18px;
 }
 
 .wheel-wrap {
-  display: flex;
-  justify-content: center;
-  margin: 25px 0;
   position: relative;
+  width: min(100%, 480px);
+  aspect-ratio: 1;
+  margin: auto;
+  padding: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b66cff, #5524ff, #ff55be);
+  box-shadow: 0 0 25px #8b35ff90;
+}
+
+#wheel {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: rotate(0deg);
+  transition: transform 5s cubic-bezier(.12,.75,.12,1);
 }
 
 .pointer {
   position: absolute;
-  top: -8px;
-  z-index: 5;
-  border-left: 18px solid transparent;
-  border-right: 18px solid transparent;
-  border-top: 35px solid #ffcc45;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-top: 0;
+  border-bottom: 40px solid #ff4fa3;
+  filter: drop-shadow(0 0 8px #ff4fa3);
 }
 
-#wheel {
-  width: min(85vw, 380px);
-  height: min(85vw, 380px);
-  border-radius: 50%;
-  border: 7px solid #fff;
-  box-shadow: 0 0 25px #00c8a066;
-  transition: transform 5s cubic-bezier(.12,.72,.08,1);
-}
-
-.result {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  color: #ffcc45;
-  min-height: 30px;
-}
-
-.group {
-  background: #0d1523;
-  padding: 15px;
-  border-radius: 12px;
-  margin: 10px 0;
-  border-left: 4px solid #00c8a0;
-}
-
-.group h3 {
-  margin-top: 0;
-  color: #65e8ff;
-}
-
-.note {
-  font-size: 13px;
-  color: #b7c6dc;
-  line-height: 1.5;
-}
-
-button.full {
+.spin-btn {
   width: 100%;
+  margin-top: 24px;
+  border: none;
+  border-radius: 18px;
+  padding: 17px;
+  color: white;
+  font-size: 21px;
+  font-weight: 800;
+  background: linear-gradient(100deg, #a33dff, #5825f5);
+  box-shadow: 0 5px 25px #853bff60;
+}
+
+.secondary-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid #884bca;
+  border-radius: 15px;
+  background: #211438;
+  color: white;
+}
+
+.winner {
+  margin-top: 20px;
+  padding: 18px;
+  background: #100a1d;
+  border: 1px solid #8b35ff;
+  border-radius: 16px;
+}
+
+.winner h3 {
+  color: #ffcf57;
+  margin: 0 0 5px;
+}
+
+#winnerName {
+  font-size: 24px;
+  font-weight: 800;
+  color: #d8aaff;
+  overflow-wrap: anywhere;
+}
+
+.section-title {
+  font-size: 18px;
+  margin: 0 0 15px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 145px;
+  resize: vertical;
+  color: white;
+  background: #0d0818;
+  border: 1px solid #51366e;
+  border-radius: 14px;
+  padding: 14px;
+  outline: none;
+}
+
+textarea:focus, input:focus {
+  border-color: #b56aff;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 8px 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.row label {
+  color: #d8c4ff;
+  font-size: 14px;
+}
+
+input[type="number"] {
+  width: 80px;
+  padding: 10px;
+  color: white;
+  background: #0d0818;
+  border: 1px solid #65418b;
+  border-radius: 10px;
+}
+
+.apply-btn {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 11px;
+  color: white;
+  background: #7031d5;
+}
+
+.group-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.group-card {
+  border: 1px solid #593580;
+  background: #100a1d;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.group-card h3 {
+  margin: 0 0 10px;
+  color: #c99aff;
+  font-size: 16px;
+}
+
+.group-card h3 span {
+  float: right;
+  color: #aaa0c5;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.group-card ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #eee5ff;
+}
+
+.group-card li {
+  margin: 5px 0;
+  overflow-wrap: anywhere;
+}
+
+.empty {
+  color: #8e829f;
+  font-size: 13px;
+}
+
+.copy-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 13px;
+  border: 1px solid #8b35ff;
+  color: white;
+  background: #211438;
+  margin-top: 15px;
+}
+
+footer {
+  text-align: center;
+  color: #7f7296;
+  font-size: 12px;
+  padding: 30px 10px;
+}
+
+@media (max-width: 800px) {
+  header {
+    padding: 18px 4%;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  main {
+    width: 92%;
+    margin-top: 20px;
+  }
+
+  .panel {
+    padding: 17px;
+  }
+
+  .brand p {
+    font-size: 10px;
+  }
+
+  .sound-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<h1>🎡 Spin & Split</h1>
-<p style="text-align:center">Undian nama dan pembagian kelompok</p>
+<header>
+  <div class="brand">
+    <div class="logo">🎡</div>
+    <div>
+      <h1>Spin <span>& Split</span></h1>
+      <p>Random Group Generator</p>
+    </div>
+  </div>
 
-<div class="card">
-  <label>Nama mahasiswa (satu nama per baris)</label>
+  <button class="sound-btn" id="soundBtn" onclick="toggleSound()">
+    🔊 Suara ON
+  </button>
+</header>
 
-  <textarea id="names">Anto
-Juni
-Eka 
+<main>
+  <div class="layout">
+
+    <!-- RODA UNDIAN -->
+    <section class="panel wheel-panel">
+      <h2 class="wheel-title">🎯 Siapa yang beruntung hari ini?</h2>
+
+      <div class="wheel-wrap">
+        <div class="pointer"></div>
+        <canvas id="wheel" width="600" height="600"></canvas>
+      </div>
+
+      <button class="spin-btn" id="spinBtn" onclick="spin()">
+        ▶ SPIN!
+      </button>
+
+      <button class="secondary-btn" onclick="resetAll()">
+        ↻ Reset Undian
+      </button>
+
+      <div class="winner">
+        <h3>🏆 Hasil Undian</h3>
+        <div id="winnerName">Belum ada pemenang</div>
+        <p class="hint" id="status">Tekan tombol Spin untuk memulai!</p>
+      </div>
+    </section>
+
+    <!-- PANEL KONTROL -->
+    <section class="panel">
+      <h2 class="section-title">👥 Daftar Peserta</h2>
+
+      <textarea id="namesInput">Anto
 Alfin
+Juni
+Eka
 Dede
-Feni
-Amel
 Ririn
-Kama</textarea>
+Lia
+Feni</textarea>
 
-  <button class="secondary full" onclick="updateWheel()">
-    Perbarui Nama
-  </button>
+      <p class="hint">
+        Satu nama per baris. Nama yang sudah diundi tidak akan muncul lagi.
+      </p>
 
-  <label>Jumlah kelompok</label>
-  <input type="number" id="groupCount" value="2" min="2">
+      <button class="apply-btn" style="width:100%" onclick="applyNames()">
+        ✓ Terapkan Nama
+      </button>
 
-  <label class="sound">
-    <input type="checkbox" id="soundEnabled" checked>
-    Aktifkan efek suara
-  </label>
+      <div class="row">
+        <label for="groupCount">Jumlah kelompok:</label>
+        <input type="number" id="groupCount" min="2" max="20" value="3">
+        <button class="apply-btn" onclick="setGroups()">Atur</button>
+      </div>
 
-  <p class="note">
-    Anto/Apryanto dan Eka memiliki peluang 98% berada
-    di kelompok berbeda, serta 2% berada di kelompok sama.
-  </p>
-</div>
+      <p class="hint" id="groupStatus">
+        Spin berikutnya akan masuk Kelompok 1.
+      </p>
 
-<div class="card">
-  <div class="wheel-wrap">
-    <div class="pointer"></div>
-    <canvas id="wheel" width="700" height="700"></canvas>
+      <div class="group-list" id="groups"></div>
+
+      <button class="copy-btn" onclick="copyResults()">
+        📋 Salin Hasil Kelompok
+      </button>
+    </section>
+
   </div>
+</main>
 
-  <div class="result" id="result">
-    Siap untuk undian!
-  </div>
-
-  <button class="primary full" id="spinButton" onclick="spin()">
-    🎡 PUTAR RODA
-  </button>
-</div>
-
-<div class="card">
-  <h2>👥 Pembagian Kelompok</h2>
-
-  <button class="primary full" onclick="splitGroups()">
-    Acak Kelompok
-  </button>
-
-  <div id="groups"></div>
-
-  <button class="secondary full" onclick="copyGroups()">
-    Salin Hasil Kelompok
-  </button>
-</div>
-
-</div>
+<footer>
+  Spin & Split · Let’s spin it, let’s split it ✨
+</footer>
 
 <script>
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
-let names = [];
-let rotation = 0;
-let spinning = false;
-let audioContext;
-
 const colors = [
-  "#00c8a0", "#3288ff", "#ff9f43",
-  "#a55eea", "#ff5e78", "#26c6da",
-  "#f7b731", "#20bf6b"
+  "#7548ff", "#bd55ff", "#ff4f9a", "#ff984b",
+  "#ffd24b", "#76e34d", "#42d9c8", "#42bfff",
+  "#4779ff", "#ec67ff"
 ];
 
-function getNames() {
-  return document.getElementById("names")
-    .value.split("\n")
-    .map(n => n.trim())
-    .filter(n => n.length > 0);
-}
+let names = [];
+let remaining = [];
+let groups = [];
+let groupCount = 3;
+let groupOrder = [];
+let currentTurn = 0;
+let spinning = false;
+let rotation = 0;
+let soundEnabled = true;
+let audioCtx = null;
 
-function updateWheel() {
-  names = getNames();
+const spinBtn = document.getElementById("spinBtn");
+const winnerName = document.getElementById("winnerName");
+const statusText = document.getElementById("status");
+const groupStatus = document.getElementById("groupStatus");
 
-  if (names.length < 2) {
-    alert("Masukkan minimal dua nama!");
-    return;
+function startAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
 
-  drawWheel();
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+}
 
-  document.getElementById("result").textContent =
-    names.length + " nama berhasil dimuat!";
+function playTone(freq, duration, type = "sine", volume = 0.08) {
+  if (!soundEnabled) return;
+
+  startAudio();
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = type;
+  osc.frequency.value = freq;
+
+  gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(
+    0.001,
+    audioCtx.currentTime + duration
+  );
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+
+function tickSound() {
+  playTone(650 + Math.random() * 180, 0.035, "square", 0.035);
+}
+
+function dingSound() {
+  playTone(660, 0.3, "sine", 0.12);
+
+  setTimeout(() => {
+    playTone(880, 0.45, "sine", 0.1);
+  }, 120);
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+
+  document.getElementById("soundBtn").textContent =
+    soundEnabled ? "🔊 Suara ON" : "🔇 Suara OFF";
+
+  if (soundEnabled) playTone(700, 0.1);
 }
 
 function drawWheel() {
-  const total = names.length;
+  const total = remaining.length;
+  const center = canvas.width / 2;
+  const radius = center - 8;
 
-  ctx.clearRect(0, 0, 700, 700);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const center = 350;
-  const radius = 340;
+  if (total === 0) {
+    ctx.beginPath();
+    ctx.arc(center, center, radius, 0, Math.PI * 2);
+    ctx.fillStyle = "#211438";
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 30px Poppins";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("SELESAI!", center, center);
+    return;
+  }
+
   const slice = Math.PI * 2 / total;
 
-  names.forEach((name, i) => {
+  remaining.forEach((name, i) => {
     const start = i * slice - Math.PI / 2;
     const end = start + slice;
 
@@ -273,8 +561,8 @@ function drawWheel() {
     ctx.fillStyle = colors[i % colors.length];
     ctx.fill();
 
-    ctx.strokeStyle = "#ffffff";
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#ffffff70";
+    ctx.lineWidth = 3;
     ctx.stroke();
 
     ctx.save();
@@ -283,248 +571,322 @@ function drawWheel() {
     ctx.rotate(start + slice / 2);
 
     ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
     ctx.fillStyle = "#ffffff";
-    ctx.font = total > 15 ? "bold 19px Arial" : "bold 23px Arial";
+    ctx.font = `bold ${Math.max(14, Math.min(24, 220 / total))}px Poppins`;
 
     let displayName = name;
 
     if (displayName.length > 18) {
-      displayName = displayName.slice(0, 16) + "...";
+      displayName = displayName.substring(0, 16) + "...";
     }
 
-    ctx.fillText(displayName, radius - 20, 8);
+    ctx.fillText(displayName, radius - 25, 0);
 
     ctx.restore();
   });
 
+  // Lingkaran tengah
   ctx.beginPath();
-  ctx.arc(center, center, 35, 0, Math.PI * 2);
-  ctx.fillStyle = "#ffffff";
+  ctx.arc(center, center, 62, 0, Math.PI * 2);
+  ctx.fillStyle = "#24113e";
   ctx.fill();
+
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 5;
+  ctx.stroke();
+
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 36px Poppins";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("↻", center, center);
 }
 
-function startAudio() {
-  if (!document.getElementById("soundEnabled").checked) {
+function prepareGroupOrder() {
+  groups = Array.from({ length: groupCount }, () => []);
+
+  // Jumlah dasar anggota setiap kelompok
+  const baseSize = Math.floor(names.length / groupCount);
+  const remainder = names.length % groupCount;
+
+  // Semua kelompok mendapat jumlah dasar
+  const capacities = Array(groupCount).fill(baseSize);
+
+  // Kelompok yang mendapat anggota tambahan dipilih acak
+  const shuffled = Array.from(
+    { length: groupCount },
+    (_, i) => i
+  ).sort(() => Math.random() - 0.5);
+
+  for (let i = 0; i < remainder; i++) {
+    capacities[shuffled[i]]++;
+  }
+
+  // Urutan kelompok tetap selang-seling,
+  // tetapi urutan awal kelompok diacak.
+  groupOrder = shuffled;
+
+  currentTurn = 0;
+
+  return capacities;
+}
+
+let capacities = [];
+
+function applyNames() {
+  if (spinning) return;
+
+  const input = document.getElementById("namesInput").value;
+
+  names = input
+    .split("\n")
+    .map(name => name.trim())
+    .filter(name => name.length > 0);
+
+  // Hilangkan nama duplikat
+  names = [...new Set(names)];
+
+  if (names.length < 2) {
+    alert("Masukkan minimal 2 nama peserta!");
     return;
   }
 
-  if (!audioContext) {
-    audioContext = new (
-      window.AudioContext || window.webkitAudioContext
-    )();
-  }
+  remaining = [...names];
 
-  if (audioContext.state === "suspended") {
-    audioContext.resume();
-  }
+  capacities = prepareGroupOrder();
+
+  winnerName.textContent = "Belum ada pemenang";
+  statusText.textContent = "Tekan tombol Spin untuk memulai!";
+
+  drawWheel();
+  renderGroups();
+  updateGroupStatus();
 }
 
-function playTone(frequency, duration, volume = 0.08) {
-  if (!document.getElementById("soundEnabled").checked) {
-    return;
-  }
+function setGroups() {
+  if (spinning) return;
 
-  startAudio();
-
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-
-  oscillator.type = "sine";
-  oscillator.frequency.value = frequency;
-
-  gain.gain.setValueAtTime(volume, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audioContext.currentTime + duration
+  const value = parseInt(
+    document.getElementById("groupCount").value
   );
 
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
+  if (!Number.isInteger(value) || value < 2 || value > 20) {
+    alert("Jumlah kelompok harus antara 2 sampai 20!");
+    return;
+  }
 
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + duration);
-}
+  groupCount = value;
 
-function tickSound() {
-  playTone(650, 0.04, 0.04);
-}
-
-function dingSound() {
-  playTone(880, 0.25);
-  setTimeout(() => playTone(1175, 0.35), 180);
+  applyNames();
 }
 
 function spin() {
   if (spinning) return;
 
-  names = getNames();
-
-  if (names.length < 2) {
-    alert("Masukkan minimal dua nama!");
+  if (remaining.length === 0) {
+    alert("Semua peserta sudah diundi!");
     return;
   }
 
-  drawWheel();
-  startAudio();
+  if (!names.length) {
+    applyNames();
+    return;
+  }
 
   spinning = true;
+  spinBtn.disabled = true;
 
-  document.getElementById("spinButton").disabled = true;
-  document.getElementById("result").textContent =
-    "Roda sedang berputar...";
+  const winnerIndex = Math.floor(Math.random() * remaining.length);
+  const winner = remaining[winnerIndex];
 
-  const winnerIndex = Math.floor(Math.random() * names.length);
-  const slice = 360 / names.length;
+  const slice = 360 / remaining.length;
 
-  const targetAngle =
-    360 * 6 + (360 - winnerIndex * slice - slice / 2);
+  // Posisi pemenang pada roda
+  const targetAngle = 360 * 6 + (360 - winnerIndex * slice - slice / 2);
 
   rotation += targetAngle;
 
-  canvas.style.transform = "rotate(" + rotation + "deg)";
+  canvas.style.transform = `rotate(${rotation}deg)`;
 
-  let tickCount = 0;
+  let delay = 70;
+  let elapsed = 0;
 
-  const tickInterval = setInterval(() => {
+  function spinTick() {
+    if (elapsed >= 4700) return;
+
     tickSound();
-    tickCount++;
 
-    if (tickCount > 25) {
-      clearInterval(tickInterval);
-    }
-  }, 150);
+    delay += 18;
+    elapsed += delay;
+
+    setTimeout(spinTick, delay);
+  }
+
+  spinTick();
 
   setTimeout(() => {
-    spinning = false;
+    remaining.splice(winnerIndex, 1);
 
-    document.getElementById("spinButton").disabled = false;
+    const groupIndex = groupOrder[currentTurn % groupOrder.length];
 
-    document.getElementById("result").textContent =
-      "🎉 Terpilih: " + names[winnerIndex];
+    // Jika kelompok sudah penuh, cari kelompok berikutnya
+    let chosenGroup = groupIndex;
+
+    for (let i = 0; i < groupOrder.length; i++) {
+      const candidate = groupOrder[(currentTurn + i) % groupOrder.length];
+
+      if (groups[candidate].length < capacities[candidate]) {
+        chosenGroup = candidate;
+        break;
+      }
+    }
+
+    groups[chosenGroup].push(winner);
+
+    currentTurn++;
+
+    winnerName.textContent = winner;
+    statusText.textContent = `Masuk Kelompok ${chosenGroup + 1}!`;
 
     dingSound();
+
+    renderGroups();
+    updateGroupStatus();
+    drawWheel();
+
+    spinning = false;
+    spinBtn.disabled = false;
+
+    if (remaining.length === 0) {
+      statusText.textContent = "Semua peserta sudah mendapatkan kelompok!";
+      spinBtn.textContent = "✓ SELESAI";
+      spinBtn.disabled = true;
+    }
+
   }, 5100);
 }
 
-function normalizeName(name) {
-  return name.toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[.,]/g, " ")
-    .trim();
-}
-
-function isAnto(name) {
-  const n = normalizeName(name);
-
-  return n.split(/\s+/).some(word =>
-    word === "anto" || word === "apryanto"
-  );
-}
-
-function isEka(name) {
-  const n = normalizeName(name);
-
-  return n.split(/\s+/).some(word => word === "eka");
-}
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-
-  return array;
-}
-
-function splitGroups() {
-  names = getNames();
-
-  const count = parseInt(
-    document.getElementById("groupCount").value
-  );
-
-  if (!Number.isInteger(count) || count < 2) {
-    alert("Jumlah kelompok minimal 2!");
+function updateGroupStatus() {
+  if (remaining.length === 0) {
+    groupStatus.textContent = "Semua peserta sudah dibagikan!";
     return;
   }
 
-  if (count > names.length) {
-    alert("Jumlah kelompok melebihi jumlah mahasiswa!");
-    return;
-  }
+  const nextGroup = groupOrder[currentTurn % groupOrder.length];
 
-  const antoIndex = names.findIndex(isAnto);
-  const ekaIndex = names.findIndex(isEka);
-
-  if (antoIndex === -1 || ekaIndex === -1) {
-    alert("Nama Anto/Apryanto atau Eka tidak ditemukan!");
-    return;
-  }
-
-  if (antoIndex === ekaIndex) {
-    alert("Anto dan Eka harus menggunakan nama berbeda!");
-    return;
-  }
-
-  const groups = Array.from({ length: count }, () => []);
-
-  const shuffled = shuffle([...names]);
-
-  shuffled.forEach((name, index) => {
-    groups[index % count].push(name);
-  });
-
-  const antoGroup = groups.findIndex(g => g.some(isAnto));
-  const ekaGroup = groups.findIndex(g => g.some(isEka));
-
-  // Jika satu kelompok, 98% peluang dipisahkan.
-  if (antoGroup === ekaGroup && Math.random() < 0.98) {
-    const candidates = [];
-
-    groups.forEach((group, groupIndex) => {
-      if (groupIndex !== antoGroup) {
-        group.forEach((name, nameIndex) => {
-          candidates.push({
-            groupIndex,
-            nameIndex
-          });
-        });
-      }
-    });
-
-    if (candidates.length > 0) {
-      const chosen = candidates[
-        Math.floor(Math.random() * candidates.length)
-      ];
-
-      const ekaPosition = groups[ekaGroup].findIndex(isEka);
-
-      const temp = groups[ekaGroup][ekaPosition];
-
-      groups[ekaGroup][ekaPosition] =
-        groups[chosen.groupIndex][chosen.nameIndex];
-
-      groups[chosen.groupIndex][chosen.nameIndex] = temp;
-    }
-  }
-
-  displayGroups(groups);
+  groupStatus.textContent =
+    `Spin berikutnya → Kelompok ${nextGroup + 1}`;
 }
 
-function displayGroups(groups) {
+function renderGroups() {
   const container = document.getElementById("groups");
 
   container.innerHTML = "";
 
-  groups.forEach((group, index) => {
-    const div = document.createElement("div");
-
-    div.className = "group";
+  groups.forEach((members, i) => {
+    const card = document.createElement("div");
+    card.className = "group-card";
 
     const title = document.createElement("h3");
-    title.textContent = "Kelompok " + (index + 1);
+    title.textContent = `Kelompok ${i + 1}`;
+
+    const count = document.createElement("span");
+    count.textContent = `${members.length} anggota`;
+
+    title.appendChild(count);
+    card.appendChild(title);
+
+    if (members.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "empty";
+      empty.textContent = "Belum ada anggota";
+      card.appendChild(empty);
+    } else {
+      const ul = document.createElement("ul");
+
+      members.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        ul.appendChild(li);
+      });
+
+      card.appendChild(ul);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+function copyResults() {
+  let result = "HASIL PEMBAGIAN KELOMPOK\n\n";
+
+  groups.forEach((members, i) => {
+    result += `Kelompok ${i + 1} (${members.length} anggota)\n`;
+
+    members.forEach((name, index) => {
+      result += `${index + 1}. ${name}\n`;
+    });
+
+    result += "\n";
+  });
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(result)
+      .then(() => alert("Hasil berhasil disalin!"))
+      .catch(() => fallbackCopy(result));
+  } else {
+    fallbackCopy(result);
+  }
+}
+
+function fallbackCopy(text) {
+  const textarea = document.createElement("textarea");
+
+  textarea.value = text;
+  document.body.appendChild(textarea);
+
+  textarea.select();
+  document.execCommand("copy");
+
+  textarea.remove();
+
+  alert("Hasil berhasil disalin!");
+}
+
+function resetAll() {
+  if (spinning) return;
+
+  remaining = [...names];
+
+  capacities = prepareGroupOrder();
+
+  winnerName.textContent = "Belum ada pemenang";
+  statusText.textContent = "Undian direset. Siap spin lagi!";
+
+  spinBtn.textContent = "▶ SPIN!";
+  spinBtn.disabled = false;
+
+  rotation = 0;
+  canvas.style.transition = "none";
+  canvas.style.transform = "rotate(0deg)";
+
+  setTimeout(() => {
+    canvas.style.transition =
+      "transform 5s cubic-bezier(.12,.75,.12,1)";
+  }, 50);
+
+  drawWheel();
+  renderGroups();
+  updateGroupStatus();
+}
+
+// Inisialisasi
+applyNames();
+</script>
+
+</body>
+  </html>" + (index + 1);
 
     const list = document.createElement("p");
     list.textContent = group.join(", ");
