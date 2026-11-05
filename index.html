@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spin & Split — Neon Edition</title>
+
+<title>Spin & Split — Neon Cat Edition</title>
 
 <style>
 :root {
@@ -17,9 +18,13 @@
   --muted:#a69bbd;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-body{
+body {
   min-height:100vh;
   background:
     radial-gradient(circle at 15% 10%,#29104d,transparent 35%),
@@ -30,11 +35,23 @@ body{
   padding:20px;
 }
 
-button,input,textarea{font:inherit}
-button{cursor:pointer;border:none}
-.container{max-width:1250px;margin:auto}
+button,input,textarea {
+  font:inherit;
+}
 
-header{
+button {
+  cursor:pointer;
+  border:none;
+}
+
+.container {
+  max-width:1250px;
+  margin:auto;
+}
+
+/* HEADER */
+
+header {
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -43,17 +60,17 @@ header{
   flex-wrap:wrap;
 }
 
-.logo{
+.logo {
   font-size:clamp(24px,5vw,38px);
   font-weight:900;
 }
 
-.logo span{
+.logo span {
   color:var(--pink);
   text-shadow:0 0 18px var(--pink);
 }
 
-.badge{
+.badge {
   padding:9px 15px;
   border:1px solid #6d4c9b;
   border-radius:30px;
@@ -62,13 +79,15 @@ header{
   font-size:12px;
 }
 
-.dashboard{
+/* DASHBOARD */
+
+.dashboard {
   display:grid;
   grid-template-columns:minmax(0,1.4fr) minmax(300px,.8fr);
   gap:20px;
 }
 
-.panel{
+.panel {
   background:linear-gradient(145deg,#19132b,#100c1c);
   border:1px solid #392454;
   border-radius:22px;
@@ -76,24 +95,64 @@ header{
   box-shadow:0 0 30px #8b35ff12;
 }
 
-.panel-title{font-size:20px;margin-bottom:18px}
-.wheel-panel{text-align:center}
+.panel-title {
+  font-size:20px;
+  margin-bottom:18px;
+}
 
-.wheel-area{
+.wheel-panel {
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.wheel-panel::before {
+  content:"🐱";
+  position:absolute;
+  top:12px;
+  right:15px;
+  font-size:30px;
+  animation:catFloat 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 10px var(--pink));
+}
+
+.wheel-panel::after {
+  content:"✦";
+  position:absolute;
+  left:15px;
+  top:15px;
+  color:var(--cyan);
+  font-size:25px;
+  animation:twinkle 2s infinite alternate;
+}
+
+@keyframes catFloat {
+  0%,100% {transform:translateY(0)}
+  50% {transform:translateY(-8px)}
+}
+
+@keyframes twinkle {
+  from {opacity:.4;transform:scale(.8)}
+  to {opacity:1;transform:scale(1.2)}
+}
+
+/* WHEEL */
+
+.wheel-area {
   width:min(100%,480px);
   aspect-ratio:1;
   margin:20px auto;
   position:relative;
 }
 
-#wheel{
+#wheel {
   width:100%;
   height:100%;
   border-radius:50%;
   filter:drop-shadow(0 0 20px #a855f755);
 }
 
-.pointer{
+.pointer {
   position:absolute;
   top:-8px;
   left:50%;
@@ -107,7 +166,7 @@ header{
   filter:drop-shadow(0 0 10px var(--lime));
 }
 
-.wheel-center{
+.wheel-center {
   position:absolute;
   top:50%;
   left:50%;
@@ -125,7 +184,9 @@ header{
   z-index:2;
 }
 
-.primary-btn{
+/* BUTTONS */
+
+.primary-btn {
   padding:15px 35px;
   border-radius:14px;
   color:white;
@@ -133,11 +194,20 @@ header{
   font-size:17px;
   background:linear-gradient(100deg,#8b35ff,#ff35c8);
   box-shadow:0 0 25px #b33cff55;
+  transition:.2s;
 }
 
-.primary-btn:disabled{opacity:.4;cursor:not-allowed}
+.primary-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 0 30px #ff35c888;
+}
 
-.secondary-btn{
+.primary-btn:disabled {
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.secondary-btn {
   padding:10px 15px;
   border-radius:10px;
   color:var(--cyan);
@@ -145,13 +215,13 @@ header{
   border:1px solid #24526b;
 }
 
-.danger-btn{
+.danger-btn {
   color:#ff7b9d;
   background:#351524;
   border:1px solid #682a48;
 }
 
-.controls{
+.controls {
   display:flex;
   justify-content:center;
   gap:10px;
@@ -159,25 +229,65 @@ header{
   margin-top:15px;
 }
 
-.status{color:var(--muted);margin:15px 0;min-height:24px}
+.status {
+  color:var(--muted);
+  margin:15px 0;
+  min-height:24px;
+}
 
-.result-name{
+.result-name {
   color:var(--lime);
   font-size:25px;
   font-weight:900;
   margin:12px;
+  text-shadow:0 0 15px #c8ff4655;
 }
 
-.form-group{margin-bottom:18px}
+/* VOLUME */
 
-label{
+.volume-control {
+  margin:15px auto;
+  max-width:280px;
+  padding:12px;
+  border-radius:15px;
+  background:#1b1230;
+  border:1px solid var(--purple);
+  box-shadow:0 0 15px #a855f733;
+}
+
+.volume-control label {
+  color:var(--cyan);
+  font-weight:bold;
+}
+
+.volume-control input {
+  accent-color:var(--pink);
+  cursor:pointer;
+  padding:0;
+  margin:8px 0;
+  border:none;
+  background:transparent;
+}
+
+#volumeValue {
+  color:var(--lime);
+  font-weight:bold;
+}
+
+/* SETTINGS */
+
+.form-group {
+  margin-bottom:18px;
+}
+
+label {
   display:block;
   margin-bottom:8px;
   color:#d6c8ed;
   font-size:14px;
 }
 
-input,textarea{
+input,textarea {
   width:100%;
   background:#0d0918;
   color:white;
@@ -187,17 +297,23 @@ input,textarea{
   outline:none;
 }
 
-input:focus,textarea:focus{border-color:var(--purple)}
-textarea{min-height:145px;resize:vertical}
+input:focus,textarea:focus {
+  border-color:var(--purple);
+}
 
-.info{
+textarea {
+  min-height:145px;
+  resize:vertical;
+}
+
+.info {
   color:var(--muted);
   font-size:12px;
   margin-top:7px;
   line-height:1.5;
 }
 
-.toggle-row{
+.toggle-row {
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -205,25 +321,40 @@ textarea{min-height:145px;resize:vertical}
   gap:10px;
 }
 
-.group-grid{
+/* GROUPS */
+
+.group-grid {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:15px;
   margin-top:20px;
 }
 
-.group-card{
+.group-card {
   background:linear-gradient(145deg,#1e1633,#110c20);
   border:1px solid #49305e;
   border-radius:17px;
   padding:17px;
   min-height:150px;
+  transition:.2s;
 }
 
-.group-card h3{color:var(--cyan);margin-bottom:12px}
-.group-card .count{float:right;color:var(--lime)}
+.group-card:hover {
+  border-color:var(--pink);
+  box-shadow:0 0 18px #ff4fd822;
+}
 
-.member{
+.group-card h3 {
+  color:var(--cyan);
+  margin-bottom:12px;
+}
+
+.group-card .count {
+  float:right;
+  color:var(--lime);
+}
+
+.member {
   padding:9px 11px;
   margin:6px 0;
   background:#2a1b3b;
@@ -231,35 +362,51 @@ textarea{min-height:145px;resize:vertical}
   border-left:3px solid var(--pink);
 }
 
-.empty{color:#766b89;font-size:13px}
-.results-section{margin-top:22px}
+.empty {
+  color:#766b89;
+  font-size:13px;
+}
 
-footer{
+.results-section {
+  margin-top:22px;
+}
+
+footer {
   text-align:center;
   margin-top:30px;
   color:#746681;
   font-size:12px;
 }
 
-@media(max-width:850px){
-  .dashboard{grid-template-columns:1fr}
-  body{padding:12px}
-  .panel{padding:16px}
+@media(max-width:850px) {
+  .dashboard {
+    grid-template-columns:1fr;
+  }
+
+  body {
+    padding:12px;
+  }
+
+  .panel {
+    padding:16px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <header>
   <div class="logo">SPIN <span>&</span> SPLIT</div>
-  <div class="badge">✦ NEON RANDOMIZER ✦</div>
+  <div class="badge">✦ NEON CAT EDITION ✦</div>
 </header>
 
 <div class="dashboard">
 
 <section class="panel wheel-panel">
+
   <h2 class="panel-title">🎡 Roda Keberuntungan</h2>
 
   <div class="wheel-area">
@@ -268,27 +415,63 @@ footer{
     <div class="wheel-center">SPIN</div>
   </div>
 
-  <div class="result-name" id="winner">Siapa berikutnya?</div>
-  <div class="status" id="status">Siap memulai undian!</div>
+  <div class="result-name" id="winner">
+    Siapa berikutnya?
+  </div>
 
-  <button class="primary-btn" id="spinBtn">🎲 SPIN SEKARANG</button>
+  <div class="status" id="status">
+    Siap memulai undian!
+  </div>
+
+  <button class="primary-btn" id="spinBtn">
+    🎲 SPIN SEKARANG
+  </button>
 
   <div class="controls">
-    <button class="secondary-btn" id="soundBtn">🔊 Suara ON</button>
-    <button class="secondary-btn danger-btn" id="resetBtn">↻ Reset</button>
+    <button class="secondary-btn" id="soundBtn">
+      🔊 Suara ON
+    </button>
+
+    <button class="secondary-btn danger-btn" id="resetBtn">
+      ↻ Reset
+    </button>
   </div>
+
+  <div class="volume-control">
+    <label for="volumeSlider">🔊 Volume Spin</label>
+
+    <input
+      type="range"
+      id="volumeSlider"
+      min="0"
+      max="1"
+      step="0.05"
+      value="0.65"
+    >
+
+    <span id="volumeValue">65%</span>
+  </div>
+
 </section>
 
 <section class="panel">
+
   <h2 class="panel-title">⚙️ Pengaturan Undian</h2>
 
   <div class="form-group">
     <label for="groupCount">Jumlah kelompok</label>
-    <input type="number" id="groupCount" min="2" max="20" value="2">
+    <input
+      type="number"
+      id="groupCount"
+      min="2"
+      max="20"
+      value="2"
+    >
   </div>
 
   <div class="form-group">
     <label for="names">Daftar peserta</label>
+
     <textarea id="names">Anto
 Alfin
 Juni
@@ -297,13 +480,17 @@ Dede
 Ririn
 Lia
 Feni</textarea>
+
     <div class="info">Satu nama per baris.</div>
   </div>
 
-  <button class="secondary-btn" id="applyBtn">✓ Terapkan Pengaturan</button>
+  <button class="secondary-btn" id="applyBtn">
+    ✓ Terapkan Pengaturan
+  </button>
 
   <div class="form-group" style="margin-top:20px">
     <label>Aturan khusus Anto & Eka</label>
+
     <div class="info">
       Kapasitas maksimal 4 orang: 98% berbeda kelompok.<br>
       Kapasitas 5 orang atau lebih: peluang berbeda kelompok 50%.<br>
@@ -320,430 +507,698 @@ Feni</textarea>
     <span>Undian selesai</span>
     <strong id="progress">0 / 8</strong>
   </div>
+
 </section>
 
 </div>
 
 <section class="panel results-section">
+
   <h2 class="panel-title">🏆 Hasil Pembagian Kelompok</h2>
+
   <div id="groups" class="group-grid"></div>
 
   <div class="controls">
-    <button class="secondary-btn" id="copyBtn">📋 Salin hasil</button>
+    <button class="secondary-btn" id="copyBtn">
+      📋 Salin hasil
+    </button>
   </div>
+
 </section>
 
-<footer>Spin & Split — Neon Edition ✦ Made for fun</footer>
+<footer>
+  Spin & Split — Neon Cat Edition ✦ Made for fun
+</footer>
+
 </div>
 
 <script>
-const canvas=document.getElementById("wheel");
-const ctx=canvas.getContext("2d");
+/* ELEMENTS */
 
-const spinBtn=document.getElementById("spinBtn");
-const resetBtn=document.getElementById("resetBtn");
-const applyBtn=document.getElementById("applyBtn");
-const soundBtn=document.getElementById("soundBtn");
-const copyBtn=document.getElementById("copyBtn");
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
 
-const namesInput=document.getElementById("names");
-const groupCountInput=document.getElementById("groupCount");
+const spinBtn = document.getElementById("spinBtn");
+const resetBtn = document.getElementById("resetBtn");
+const applyBtn = document.getElementById("applyBtn");
+const soundBtn = document.getElementById("soundBtn");
+const copyBtn = document.getElementById("copyBtn");
 
-const winnerDisplay=document.getElementById("winner");
-const statusDisplay=document.getElementById("status");
-const remainingDisplay=document.getElementById("remaining");
-const progressDisplay=document.getElementById("progress");
-const groupsDisplay=document.getElementById("groups");
+const namesInput = document.getElementById("names");
+const groupCountInput = document.getElementById("groupCount");
 
-const colors=[
-"#a855f7","#ff4fd8","#37eaff","#c8ff46",
-"#7c3aed","#f97316","#06b6d4","#e879f9",
-"#84cc16","#6366f1"
+const winnerDisplay = document.getElementById("winner");
+const statusDisplay = document.getElementById("status");
+
+const remainingDisplay = document.getElementById("remaining");
+const progressDisplay = document.getElementById("progress");
+const groupsDisplay = document.getElementById("groups");
+
+const volumeSlider = document.getElementById("volumeSlider");
+const volumeValue = document.getElementById("volumeValue");
+
+/* COLORS */
+
+const colors = [
+  "#a855f7",
+  "#ff4fd8",
+  "#37eaff",
+  "#c8ff46",
+  "#7c3aed",
+  "#f97316",
+  "#06b6d4",
+  "#e879f9",
+  "#84cc16",
+  "#6366f1"
 ];
 
-let participants=[];
-let remaining=[];
-let groups=[];
-let capacities=[];
-let totalParticipants=0;
-let groupCount=2;
-let drawnCount=0;
-let spinning=false;
-let soundEnabled=true;
-let audioContext=null;
-let rotation=0;
+/* GAME STATE */
 
-/* AUDIO */
+let participants = [];
+let remaining = [];
+let groups = [];
+let capacities = [];
 
-function tone(freq=600,duration=.1){
- if(!soundEnabled)return;
+let totalParticipants = 0;
+let groupCount = 2;
+let drawnCount = 0;
 
- try{
-  if(!audioContext){
-   audioContext=new(window.AudioContext||window.webkitAudioContext)();
+let spinning = false;
+let soundEnabled = true;
+let audioContext = null;
+let rotation = 0;
+
+/* AUDIO SETTINGS */
+
+let volumeLevel = 0.65;
+let tickTimer = null;
+let spinStartTime = 0;
+
+const spinDuration = 5000;
+
+volumeSlider.addEventListener("input", () => {
+  volumeLevel = Number(volumeSlider.value);
+
+  volumeValue.textContent =
+    Math.round(volumeLevel * 100) + "%";
+});
+
+/* AUDIO ENGINE */
+
+function initAudio() {
+  if (!audioContext) {
+    audioContext = new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
   }
 
-  if(audioContext.state==="suspended")audioContext.resume();
-
-  const osc=audioContext.createOscillator();
-  const gain=audioContext.createGain();
-
-  osc.frequency.value=freq;
-  gain.gain.setValueAtTime(.05,audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);
-
-  osc.connect(gain);
-  gain.connect(audioContext.destination);
-  osc.start();
-  osc.stop(audioContext.currentTime+duration);
- }catch(e){}
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
 }
 
-soundBtn.onclick=()=>{
- soundEnabled=!soundEnabled;
- soundBtn.textContent=soundEnabled?"🔊 Suara ON":"🔇 Suara OFF";
- if(soundEnabled)tone(700);
+function tone(freq = 600, duration = 0.1, intensity = 1) {
+  if (!soundEnabled || volumeLevel <= 0) return;
+
+  try {
+    initAudio();
+
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    osc.type = "triangle";
+    osc.frequency.value = freq;
+
+    const actualVolume = Math.min(
+      1,
+      volumeLevel * intensity
+    );
+
+    gain.gain.setValueAtTime(
+      actualVolume,
+      audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioContext.currentTime + duration
+    );
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.start();
+    osc.stop(audioContext.currentTime + duration);
+
+  } catch (error) {
+    console.log("Audio error:", error);
+  }
+}
+
+/* SPIN TICK SOUND */
+
+function playTick() {
+  if (!soundEnabled || !spinning) return;
+
+  tone(
+    850 + Math.random() * 350,
+    0.045,
+    0.9
+  );
+}
+
+function startSpinSound() {
+  stopSpinSound();
+
+  spinStartTime = performance.now();
+
+  function tickLoop() {
+    if (!spinning || !soundEnabled) return;
+
+    const elapsed = performance.now() - spinStartTime;
+
+    const progress = Math.min(
+      elapsed / spinDuration,
+      1
+    );
+
+    playTick();
+
+    /*
+      Interval bertambah saat roda melambat.
+      Awal cepat, akhir lebih lambat.
+    */
+
+    const interval =
+      65 + Math.pow(progress, 2.5) * 450;
+
+    tickTimer = setTimeout(tickLoop, interval);
+  }
+
+  tickLoop();
+}
+
+function stopSpinSound() {
+  if (tickTimer) {
+    clearTimeout(tickTimer);
+    tickTimer = null;
+  }
+}
+
+/* SOUND BUTTON */
+
+soundBtn.onclick = () => {
+  soundEnabled = !soundEnabled;
+
+  soundBtn.textContent = soundEnabled
+    ? "🔊 Suara ON"
+    : "🔇 Suara OFF";
+
+  if (!soundEnabled) {
+    stopSpinSound();
+  } else {
+    tone(700, 0.15);
+  }
 };
 
-function shuffle(arr){
- arr=[...arr];
+/* SHUFFLE */
 
- for(let i=arr.length-1;i>0;i--){
-  const j=Math.floor(Math.random()*(i+1));
-  [arr[i],arr[j]]=[arr[j],arr[i]];
- }
+function shuffle(arr) {
+  arr = [...arr];
 
- return arr;
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+
+  return arr;
 }
 
-function getNames(){
- return namesInput.value.split("\n").map(n=>n.trim()).filter(Boolean);
+/* NAMES */
+
+function getNames() {
+  return namesInput.value
+    .split("\n")
+    .map(n => n.trim())
+    .filter(Boolean);
 }
 
-function updateProgress(){
- remainingDisplay.textContent=remaining.length;
- progressDisplay.textContent=`${drawnCount} / ${totalParticipants}`;
+function updateProgress() {
+  remainingDisplay.textContent = remaining.length;
+
+  progressDisplay.textContent =
+    `${drawnCount} / ${totalParticipants}`;
 }
 
-/* GROUPS */
+/* GROUP CREATION */
 
-function createGroups(){
- groups=Array.from({length:groupCount},(_,i)=>({
-  name:`Kelompok ${i+1}`,
-  members:[]
- }));
+function createGroups() {
+  groups = Array.from(
+    { length: groupCount },
+    (_, i) => ({
+      name: `Kelompok ${i + 1}`,
+      members: []
+    })
+  );
 
- const base=Math.floor(totalParticipants/groupCount);
- const extra=totalParticipants%groupCount;
+  const base = Math.floor(
+    totalParticipants / groupCount
+  );
 
- capacities=Array(groupCount).fill(base);
+  const extra = totalParticipants % groupCount;
 
- shuffle(Array.from({length:groupCount},(_,i)=>i))
- .slice(0,extra)
- .forEach(i=>capacities[i]++);
+  capacities = Array(groupCount).fill(base);
 
- renderGroups();
+  shuffle(
+    Array.from({ length: groupCount }, (_, i) => i)
+  )
+    .slice(0, extra)
+    .forEach(i => capacities[i]++);
+
+  renderGroups();
 }
 
-function availableGroups(){
- return groups.map((g,i)=>({
-  index:i,
-  slots:capacities[i]-g.members.length
- })).filter(g=>g.slots>0);
+/* AVAILABLE GROUPS */
+
+function availableGroups() {
+  return groups
+    .map((g, i) => ({
+      index: i,
+      slots: capacities[i] - g.members.length
+    }))
+    .filter(g => g.slots > 0);
 }
 
-function randomGroup(){
- const available=availableGroups();
+/* RANDOM GROUP */
 
- if(!available.length)return -1;
+function randomGroup() {
+  const available = availableGroups();
 
- const totalSlots=available.reduce((sum,g)=>sum+g.slots,0);
- let r=Math.random()*totalSlots;
+  if (!available.length) return -1;
 
- for(const g of available){
-  r-=g.slots;
-  if(r<0)return g.index;
- }
+  const totalSlots = available.reduce(
+    (sum, g) => sum + g.slots,
+    0
+  );
 
- return available[available.length-1].index;
+  let r = Math.random() * totalSlots;
+
+  for (const g of available) {
+    r -= g.slots;
+
+    if (r < 0) return g.index;
+  }
+
+  return available[available.length - 1].index;
 }
 
-/* ANTO & EKA */
+/* ANTO & EKA SPECIAL RULE */
 
-function specialProbability(){
- return capacities.some(size=>size>=5)?.5:.98;
+function specialProbability() {
+  return capacities.some(size => size >= 5)
+    ? 0.5
+    : 0.98;
 }
 
-function chooseGroup(name){
- const normalized=name.toLowerCase();
+function chooseGroup(name) {
+  const normalized = name.toLowerCase();
 
- if(normalized!=="anto"&&normalized!=="eka"){
-  return randomGroup();
- }
+  if (normalized !== "anto" && normalized !== "eka") {
+    return randomGroup();
+  }
 
- const other=normalized==="anto"?"eka":"anto";
+  const other = normalized === "anto"
+    ? "eka"
+    : "anto";
 
- const otherGroup=groups.findIndex(g=>
-  g.members.some(m=>m.toLowerCase()===other)
- );
+  const otherGroup = groups.findIndex(g =>
+    g.members.some(m => m.toLowerCase() === other)
+  );
 
- if(otherGroup===-1)return randomGroup();
+  if (otherGroup === -1) {
+    return randomGroup();
+  }
 
- const available=availableGroups();
- const same=available.find(g=>g.index===otherGroup);
- const different=available.filter(g=>g.index!==otherGroup);
+  const available = availableGroups();
 
- if(!same)return different.length?
-  different[Math.floor(Math.random()*different.length)].index:-1;
+  const same = available.find(
+    g => g.index === otherGroup
+  );
 
- if(!different.length)return same.index;
+  const different = available.filter(
+    g => g.index !== otherGroup
+  );
 
- if(Math.random()<specialProbability()){
-  return different[Math.floor(Math.random()*different.length)].index;
- }
+  if (!same) {
+    return different.length
+      ? different[
+          Math.floor(Math.random() * different.length)
+        ].index
+      : -1;
+  }
 
- return same.index;
+  if (!different.length) {
+    return same.index;
+  }
+
+  if (Math.random() < specialProbability()) {
+    return different[
+      Math.floor(Math.random() * different.length)
+    ].index;
+  }
+
+  return same.index;
 }
 
-/* WHEEL */
+/* WHEEL DRAWING */
 
-function drawWheel(){
- const size=canvas.width;
- const center=size/2;
- const radius=center-8;
+function drawWheel() {
+  const size = canvas.width;
+  const center = size / 2;
+  const radius = center - 8;
 
- ctx.clearRect(0,0,size,size);
+  ctx.clearRect(0, 0, size, size);
 
- if(!remaining.length){
-  ctx.beginPath();
-  ctx.arc(center,center,radius,0,Math.PI*2);
-  ctx.fillStyle="#211332";
-  ctx.fill();
+  if (!remaining.length) {
+    ctx.beginPath();
 
-  ctx.fillStyle="white";
-  ctx.font="bold 30px Arial";
-  ctx.textAlign="center";
-  ctx.fillText("SELESAI",center,center);
-  return;
- }
+    ctx.arc(
+      center,
+      center,
+      radius,
+      0,
+      Math.PI * 2
+    );
 
- const slice=2*Math.PI/remaining.length;
+    ctx.fillStyle = "#211332";
+    ctx.fill();
 
- remaining.forEach((name,i)=>{
-  const start=i*slice-Math.PI/2;
-  const end=start+slice;
+    ctx.fillStyle = "white";
+    ctx.font = "bold 30px Arial";
+    ctx.textAlign = "center";
 
-  ctx.beginPath();
-  ctx.moveTo(center,center);
-  ctx.arc(center,center,radius,start,end);
-  ctx.closePath();
+    ctx.fillText("SELESAI", center, center);
 
-  ctx.fillStyle=colors[i%colors.length];
-  ctx.fill();
-  ctx.strokeStyle="#fff";
-  ctx.lineWidth=3;
-  ctx.stroke();
+    return;
+  }
 
-  ctx.save();
-  ctx.translate(center,center);
-  ctx.rotate(start+slice/2);
+  const slice = 2 * Math.PI / remaining.length;
 
-  ctx.textAlign="right";
-  ctx.fillStyle="white";
-  ctx.font="bold 24px Arial";
+  remaining.forEach((name, i) => {
+    const start = i * slice - Math.PI / 2;
+    const end = start + slice;
 
-  let display=name.length>16?name.slice(0,14)+"...":name;
-  ctx.fillText(display,radius-25,8);
+    ctx.beginPath();
+    ctx.moveTo(center, center);
 
-  ctx.restore();
- });
+    ctx.arc(
+      center,
+      center,
+      radius,
+      start,
+      end
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.save();
+
+    ctx.translate(center, center);
+    ctx.rotate(start + slice / 2);
+
+    ctx.textAlign = "right";
+    ctx.fillStyle = "white";
+    ctx.font = "bold 24px Arial";
+
+    const display = name.length > 16
+      ? name.slice(0, 14) + "..."
+      : name;
+
+    ctx.fillText(display, radius - 25, 8);
+
+    ctx.restore();
+  });
 }
 
 /* SPIN */
 
-function spin(){
- if(spinning||!remaining.length)return;
+function spin() {
+  if (spinning || !remaining.length) return;
 
- spinning=true;
- spinBtn.disabled=true;
+  spinning = true;
+  spinBtn.disabled = true;
 
- const index=Math.floor(Math.random()*remaining.length);
- const selected=remaining[index];
+  const index = Math.floor(
+    Math.random() * remaining.length
+  );
 
- const slice=360/remaining.length;
- const target=360*6+(360-index*slice-slice/2);
+  const selected = remaining[index];
 
- rotation+=target;
+  const slice = 360 / remaining.length;
 
- canvas.style.transition="transform 5s cubic-bezier(.12,.75,.08,1)";
- canvas.style.transform=`rotate(${rotation}deg)`;
+  const target =
+    360 * 6 +
+    (360 - index * slice - slice / 2);
 
- statusDisplay.textContent="Roda sedang berputar...";
- tone(450,.15);
+  rotation += target;
 
- setTimeout(()=>{
-  remaining.splice(remaining.indexOf(selected),1);
+  canvas.style.transition =
+    "transform 5s cubic-bezier(.12,.75,.08,1)";
 
-  const groupIndex=chooseGroup(selected);
+  canvas.style.transform =
+    `rotate(${rotation}deg)`;
 
-  if(groupIndex>=0)groups[groupIndex].members.push(selected);
+  statusDisplay.textContent =
+    "Roda sedang berputar...";
 
-  drawnCount++;
+  startSpinSound();
 
-  winnerDisplay.textContent=selected;
-  statusDisplay.textContent=groupIndex>=0?
-   `${selected} masuk ${groups[groupIndex].name}!`:
-   "Undian selesai.";
+  setTimeout(() => {
+    stopSpinSound();
 
-  tone(700,.2);
-  setTimeout(()=>tone(1000,.25),150);
+    remaining.splice(
+      remaining.indexOf(selected),
+      1
+    );
 
+    const groupIndex = chooseGroup(selected);
+
+    if (groupIndex >= 0) {
+      groups[groupIndex].members.push(selected);
+    }
+
+    drawnCount++;
+
+    winnerDisplay.textContent = selected;
+
+    statusDisplay.textContent = groupIndex >= 0
+      ? `${selected} masuk ${groups[groupIndex].name}!`
+      : "Undian selesai.";
+
+    /* WINNER SOUND */
+
+    tone(700, 0.2, 1);
+
+    setTimeout(() => {
+      tone(1000, 0.25, 1);
+    }, 150);
+
+    drawWheel();
+    renderGroups();
+    updateProgress();
+
+    spinning = false;
+
+    spinBtn.disabled = remaining.length === 0;
+
+    if (!remaining.length) {
+      statusDisplay.textContent =
+        "🎉 Semua peserta berhasil dibagi!";
+    }
+
+  }, 5100);
+}
+
+/* HTML ESCAPE */
+
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[c]);
+}
+
+/* GROUP DISPLAY */
+
+function renderGroups() {
+  groupsDisplay.innerHTML = "";
+
+  groups.forEach((group, i) => {
+    const card = document.createElement("div");
+
+    card.className = "group-card";
+
+    const members = group.members.length
+      ? group.members
+          .map(m => `<div class="member">${escapeHTML(m)}</div>`)
+          .join("")
+      : `<div class="empty">Belum ada anggota</div>`;
+
+    card.innerHTML = `
+      <h3>
+        ${group.name}
+        <span class="count">
+          ${group.members.length}/${capacities[i]}
+        </span>
+      </h3>
+      ${members}
+    `;
+
+    groupsDisplay.appendChild(card);
+  });
+}
+
+/* APPLY SETTINGS */
+
+function applySettings() {
+  if (spinning) return;
+
+  const inputNames = getNames();
+  const unique = [];
+
+  inputNames.forEach(name => {
+    if (!unique.some(
+      n => n.toLowerCase() === name.toLowerCase()
+    )) {
+      unique.push(name);
+    }
+  });
+
+  const count = Number(groupCountInput.value);
+
+  if (unique.length < 2) {
+    alert("Masukkan minimal 2 peserta.");
+    return;
+  }
+
+  if (
+    !Number.isInteger(count) ||
+    count < 2 ||
+    count > 20 ||
+    count > unique.length
+  ) {
+    alert("Jumlah kelompok tidak valid.");
+    return;
+  }
+
+  participants = unique;
+  remaining = [...participants];
+
+  totalParticipants = participants.length;
+  groupCount = count;
+  drawnCount = 0;
+  rotation = 0;
+
+  canvas.style.transition = "none";
+  canvas.style.transform = "rotate(0deg)";
+
+  winnerDisplay.textContent = "Siapa berikutnya?";
+  statusDisplay.textContent =
+    "Pengaturan berhasil diterapkan!";
+
+  spinBtn.disabled = false;
+
+  createGroups();
   drawWheel();
-  renderGroups();
   updateProgress();
-
-  spinning=false;
-  spinBtn.disabled=remaining.length===0;
-
-  if(!remaining.length){
-   statusDisplay.textContent="🎉 Semua peserta berhasil dibagi!";
-  }
- },5100);
-}
-
-/* RENDER */
-
-function escapeHTML(text){
- return String(text).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",
-  '"':"&quot;","'":"&#39;"
- })[c]);
-}
-
-function renderGroups(){
- groupsDisplay.innerHTML="";
-
- groups.forEach((group,i)=>{
-  const card=document.createElement("div");
-  card.className="group-card";
-
-  const members=group.members.length?
-   group.members.map(m=>`<div class="member">${escapeHTML(m)}</div>`).join(""):
-   `<div class="empty">Belum ada anggota</div>`;
-
-  card.innerHTML=`
-   <h3>${group.name}<span class="count">${group.members.length}/${capacities[i]}</span></h3>
-   ${members}
-  `;
-
-  groupsDisplay.appendChild(card);
- });
-}
-
-/* APPLY */
-
-function applySettings(){
- if(spinning)return;
-
- const inputNames=getNames();
- const unique=[];
-
- inputNames.forEach(name=>{
-  if(!unique.some(n=>n.toLowerCase()===name.toLowerCase())){
-   unique.push(name);
-  }
- });
-
- const count=Number(groupCountInput.value);
-
- if(unique.length<2){
-  alert("Masukkan minimal 2 peserta.");
-  return;
- }
-
- if(!Number.isInteger(count)||count<2||count>20||count>unique.length){
-  alert("Jumlah kelompok tidak valid.");
-  return;
- }
-
- participants=unique;
- remaining=[...participants];
- totalParticipants=participants.length;
- groupCount=count;
- drawnCount=0;
- rotation=0;
-
- canvas.style.transition="none";
- canvas.style.transform="rotate(0deg)";
-
- winnerDisplay.textContent="Siapa berikutnya?";
- statusDisplay.textContent="Pengaturan berhasil diterapkan!";
- spinBtn.disabled=false;
-
- createGroups();
- drawWheel();
- updateProgress();
 }
 
 /* RESET */
 
-function resetGame(){
- if(spinning)return;
+function resetGame() {
+  if (spinning) return;
 
- remaining=[...participants];
- drawnCount=0;
- rotation=0;
+  stopSpinSound();
 
- canvas.style.transition="none";
- canvas.style.transform="rotate(0deg)";
+  remaining = [...participants];
+  drawnCount = 0;
+  rotation = 0;
 
- winnerDisplay.textContent="Siapa berikutnya?";
- statusDisplay.textContent="Undian berhasil direset!";
- spinBtn.disabled=false;
+  canvas.style.transition = "none";
+  canvas.style.transform = "rotate(0deg)";
 
- createGroups();
- drawWheel();
- updateProgress();
+  winnerDisplay.textContent = "Siapa berikutnya?";
+  statusDisplay.textContent = "Undian berhasil direset!";
+
+  spinBtn.disabled = false;
+
+  createGroups();
+  drawWheel();
+  updateProgress();
 }
 
-/* COPY */
+/* COPY RESULTS */
 
-async function copyResults(){
- if(!drawnCount){
-  alert("Belum ada hasil undian.");
-  return;
- }
+async function copyResults() {
+  if (!drawnCount) {
+    alert("Belum ada hasil undian.");
+    return;
+  }
 
- let text="🎉 HASIL SPIN & SPLIT 🎉\n\n";
+  let text = "🎉 HASIL SPIN & SPLIT 🎉\n\n";
 
- groups.forEach(group=>{
-  text+=group.name+":\n";
+  groups.forEach(group => {
+    text += group.name + ":\n";
 
-  group.members.forEach((member,i)=>{
-   text+=`${i+1}. ${member}\n`;
+    group.members.forEach((member, i) => {
+      text += `${i + 1}. ${member}\n`;
+    });
+
+    text += "\n";
   });
 
-  text+="\n";
- });
+  try {
+    await navigator.clipboard.writeText(text);
 
- try{
-  await navigator.clipboard.writeText(text);
-  statusDisplay.textContent="Hasil berhasil disalin!";
- }catch(e){
-  const area=document.createElement("textarea");
-  area.value=text;
-  document.body.appendChild(area);
-  area.select();
-  document.execCommand("copy");
-  area.remove();
-  statusDisplay.textContent="Hasil berhasil disalin!";
- }
+    statusDisplay.textContent =
+      "Hasil berhasil disalin!";
+
+  } catch (e) {
+    const area = document.createElement("textarea");
+
+    area.value = text;
+
+    document.body.appendChild(area);
+    area.select();
+
+    document.execCommand("copy");
+    area.remove();
+
+    statusDisplay.textContent =
+      "Hasil berhasil disalin!";
+  }
 }
 
-spinBtn.onclick=spin;
-resetBtn.onclick=resetGame;
-applyBtn.onclick=applySettings;
-copyBtn.onclick=copyResults;
+/* BUTTON EVENTS */
+
+spinBtn.onclick = spin;
+resetBtn.onclick = resetGame;
+applyBtn.onclick = applySettings;
+copyBtn.onclick = copyResults;
+
+/* INITIALIZE */
 
 applySettings();
 </script>
