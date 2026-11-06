@@ -1002,7 +1002,7 @@ function spin() {
 
     statusDisplay.textContent = groupIndex >= 0
       ? `${selected} masuk ${groups[groupIndex].name}!`
-      : "Undian selesai.";
+      : "Pembagian kelompok selesai.";
 
     /* WINNER SOUND */
 
@@ -1153,7 +1153,7 @@ function resetGame() {
 
 async function copyResults() {
   if (!drawnCount) {
-    alert("Belum ada hasil undian.");
+    alert("Belum ada hasil pembagian kelompok.");
     return;
   }
 
