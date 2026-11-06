@@ -8,353 +8,421 @@
 
 <style>
 :root {
-  --bg: #080812;
-  --panel: #151528;
-  --pink: #ff4fd8;
-  --purple: #a855f7;
-  --cyan: #22d3ee;
-  --lime: #b7ff5e;
-  --text: #f5f3ff;
+  --bg:#080611;
+  --panel:#151025;
+  --purple:#a855f7;
+  --pink:#ff4fd8;
+  --cyan:#37eaff;
+  --lime:#c8ff46;
+  --text:#f7f2ff;
+  --muted:#a69bbd;
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body {
-  margin: 0;
-  padding: 18px;
-  font-family: Arial, sans-serif;
-  color: var(--text);
-
+  min-height:100vh;
   background:
-    radial-gradient(circle at top, #28103d, transparent 50%),
+    radial-gradient(circle at 15% 10%,#29104d,transparent 35%),
+    radial-gradient(circle at 90% 80%,#102b42,transparent 35%),
     var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  padding:20px;
+}
+
+button,input,textarea {
+  font:inherit;
+}
+
+button {
+  cursor:pointer;
+  border:none;
 }
 
 .container {
-  max-width: 900px;
-  margin: auto;
+  max-width:1250px;
+  margin:auto;
 }
+
+/* HEADER */
 
 header {
-  text-align: center;
-  margin-bottom: 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+  flex-wrap:wrap;
 }
 
-header h1 {
-  color: var(--pink);
-  font-size: clamp(28px, 6vw, 45px);
-  text-shadow: 0 0 15px var(--pink);
-  margin-bottom: 8px;
+.logo {
+  font-size:clamp(24px,5vw,38px);
+  font-weight:900;
 }
 
-header p {
-  color: #c4b5fd;
+.logo span {
+  color:var(--pink);
+  text-shadow:0 0 18px var(--pink);
+}
+
+.badge {
+  padding:9px 15px;
+  border:1px solid #6d4c9b;
+  border-radius:30px;
+  color:var(--cyan);
+  background:#171026;
+  font-size:12px;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(300px,.8fr);
+  gap:20px;
 }
 
 .panel {
-  background: var(--panel);
-  border: 1px solid #553080;
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 20px;
-
-  box-shadow: 0 0 20px #a855f722;
+  background:linear-gradient(145deg,#19132b,#100c1c);
+  border:1px solid #392454;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 0 30px #8b35ff12;
 }
-
-/* JUDUL PEMBAGIAN KELOMPOK */
 
 .panel-title {
-  color: var(--cyan);
-  text-shadow: 0 0 8px var(--cyan);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-
-  text-align: center;
-  margin-top: 0;
+  font-size:20px;
+  margin-bottom:18px;
 }
 
-/* KUCING MELAYANG DI SAMPING JUDUL */
-
-.floating-cat {
-  display: inline-block;
-  font-size: 28px;
-
-  animation: floatingCat 2s ease-in-out infinite;
+.wheel-panel {
+  text-align:center;
+  position:relative;
+  overflow:hidden;
 }
 
-@keyframes floatingCat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-7px);
-  }
+.wheel-panel::before {
+  content:"🐱";
+  position:absolute;
+  top:12px;
+  right:15px;
+  font-size:30px;
+  animation:catFloat 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 10px var(--pink));
 }
 
-/* AREA RODA */
+.wheel-panel::after {
+  content:"✦";
+  position:absolute;
+  left:15px;
+  top:15px;
+  color:var(--cyan);
+  font-size:25px;
+  animation:twinkle 2s infinite alternate;
+}
+
+@keyframes catFloat {
+  0%,100% {transform:translateY(0)}
+  50% {transform:translateY(-8px)}
+}
+
+@keyframes twinkle {
+  from {opacity:.4;transform:scale(.8)}
+  to {opacity:1;transform:scale(1.2)}
+}
+
+/* WHEEL */
 
 .wheel-area {
-  position: relative;
-
-  width: min(100%, 440px);
-  aspect-ratio: 1;
-
-  margin: 25px auto;
+  width:min(100%,480px);
+  aspect-ratio:1;
+  margin:20px auto;
+  position:relative;
 }
 
 #wheel {
-  width: 100%;
-  height: 100%;
-  display: block;
-
-  filter: drop-shadow(0 0 15px #a855f7);
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  filter:drop-shadow(0 0 20px #a855f755);
 }
-
-/* PENUNJUK RODA */
 
 .pointer {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  z-index: 5;
-
-  color: var(--lime);
-  font-size: 38px;
-
-  text-shadow: 0 0 12px var(--lime);
+  position:absolute;
+  top:-8px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:3;
+  width:0;
+  height:0;
+  border-left:19px solid transparent;
+  border-right:19px solid transparent;
+  border-top:42px solid var(--lime);
+  filter:drop-shadow(0 0 10px var(--lime));
 }
 
-/* TOMBOL EMOJI TENGAH */
+/* TENGAH RODA */
 
-.spin-button {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: 100px;
-  height: 100px;
-
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #160d2b;
-
-  border: 3px solid var(--pink);
-
-  box-shadow:
-    0 0 18px var(--pink),
-    inset 0 0 15px #a855f755;
-
-  cursor: pointer;
-
-  z-index: 4;
-
-  padding: 0;
+.wheel-center {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:85px;
+  height:85px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  border:5px solid white;
+  box-shadow:0 0 25px var(--pink);
+  display:grid;
+  place-items:center;
+  z-index:2;
 }
 
-/* EMOJI LEBIH BESAR */
+/* EMOJI KUCING */
 
-.spin-emoji {
-  display: inline-block;
-
-  font-size: 58px;
-  line-height: 1;
-
-  transform-origin: center;
+.wheel-center span {
+  font-size:55px;
+  display:inline-block;
+  transform-style:preserve-3d;
+  animation:catTopSpin 1.2s linear infinite;
+  filter:drop-shadow(0 0 8px white);
 }
 
-/* EMOJI BERPUTAR KANAN KE KIRI */
+/* ANIMASI Gasing */
 
-.spin-button.spinning .spin-emoji {
-  animation: catSpin 0.5s linear infinite;
-}
-
-@keyframes catSpin {
-  from {
-    transform: rotate(0deg);
+@keyframes catTopSpin {
+  0% {
+    transform:rotateY(0deg) rotateZ(-12deg) scaleX(1);
   }
 
-  to {
-    transform: rotate(-360deg);
+  25% {
+    transform:rotateY(90deg) rotateZ(12deg) scaleX(.7);
+  }
+
+  50% {
+    transform:rotateY(180deg) rotateZ(-12deg) scaleX(1);
+  }
+
+  75% {
+    transform:rotateY(270deg) rotateZ(12deg) scaleX(.7);
+  }
+
+  100% {
+    transform:rotateY(360deg) rotateZ(-12deg) scaleX(1);
   }
 }
 
-/* BUTTON */
+/* BUTTONS */
 
-button {
-  border: none;
-  border-radius: 10px;
-
-  padding: 12px 18px;
-
-  font-size: 15px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  transition: 0.2s;
+.primary-btn {
+  padding:15px 35px;
+  border-radius:14px;
+  color:white;
+  font-weight:900;
+  font-size:17px;
+  background:linear-gradient(100deg,#8b35ff,#ff35c8);
+  box-shadow:0 0 25px #b33cff55;
+  transition:.2s;
 }
 
-button:hover {
-  filter: brightness(1.15);
+.primary-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 0 30px #ff35c888;
 }
 
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.primary-btn:disabled {
+  opacity:.4;
+  cursor:not-allowed;
 }
 
-.primary {
-  background: linear-gradient(135deg, var(--pink), var(--purple));
-  color: white;
-
-  box-shadow: 0 0 12px #ff4fd855;
+.secondary-btn {
+  padding:10px 15px;
+  border-radius:10px;
+  color:var(--cyan);
+  background:#172333;
+  border:1px solid #24526b;
 }
 
-.secondary {
-  background: #292943;
-  color: white;
-
-  border: 1px solid #6655aa;
+.danger-btn {
+  color:#ff7b9d;
+  background:#351524;
+  border:1px solid #682a48;
 }
 
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-
-  justify-content: center;
-  gap: 10px;
-
-  margin-top: 15px;
+.controls {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
 }
 
-/* INPUT */
+.status {
+  color:var(--muted);
+  margin:15px 0;
+  min-height:24px;
+}
 
-textarea,
-input,
-select {
-  width: 100%;
+.result-name {
+  color:var(--lime);
+  font-size:25px;
+  font-weight:900;
+  margin:12px;
+  text-shadow:0 0 15px #c8ff4655;
+}
 
-  padding: 12px;
+/* VOLUME */
 
-  border-radius: 10px;
-  border: 1px solid #594078;
+.volume-control {
+  margin:15px auto;
+  max-width:280px;
+  padding:12px;
+  border-radius:15px;
+  background:#1b1230;
+  border:1px solid var(--purple);
+  box-shadow:0 0 15px #a855f733;
+}
 
-  background: #0d0d1b;
-  color: white;
+.volume-control label {
+  color:var(--cyan);
+  font-weight:bold;
+}
 
-  margin-top: 8px;
+.volume-control input {
+  accent-color:var(--pink);
+  cursor:pointer;
+  padding:0;
+  margin:8px 0;
+  border:none;
+  background:transparent;
+}
 
-  font-size: 15px;
+#volumeValue {
+  color:var(--lime);
+  font-weight:bold;
+}
+
+/* SETTINGS */
+
+.form-group {
+  margin-bottom:18px;
 }
 
 label {
-  display: block;
-  margin-top: 15px;
-
-  color: #d8b4fe;
+  display:block;
+  margin-bottom:8px;
+  color:#d6c8ed;
+  font-size:14px;
 }
 
-input[type="range"] {
-  padding: 0;
+input,textarea {
+  width:100%;
+  background:#0d0918;
+  color:white;
+  border:1px solid #49305e;
+  border-radius:10px;
+  padding:12px;
+  outline:none;
 }
 
-input[type="checkbox"] {
-  width: auto;
+input:focus,textarea:focus {
+  border-color:var(--purple);
 }
 
-/* STATUS */
-
-.status {
-  text-align: center;
-
-  color: var(--lime);
-
-  min-height: 25px;
-  margin-top: 12px;
+textarea {
+  min-height:145px;
+  resize:vertical;
 }
 
-/* HASIL KELOMPOK */
+.info {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:7px;
+  line-height:1.5;
+}
 
-.results {
-  display: grid;
+.toggle-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:15px 0;
+  gap:10px;
+}
 
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(180px, 1fr)
-  );
+/* GROUPS */
 
-  gap: 15px;
-
-  margin-top: 15px;
+.group-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  margin-top:20px;
 }
 
 .group-card {
-  background: #20152f;
+  background:linear-gradient(145deg,#1e1633,#110c20);
+  border:1px solid #49305e;
+  border-radius:17px;
+  padding:17px;
+  min-height:150px;
+  transition:.2s;
+}
 
-  border: 1px solid var(--purple);
-  border-radius: 12px;
-
-  padding: 15px;
-
-  box-shadow: 0 0 12px #a855f722;
+.group-card:hover {
+  border-color:var(--pink);
+  box-shadow:0 0 18px #ff4fd822;
 }
 
 .group-card h3 {
-  color: var(--pink);
-  margin-top: 0;
+  color:var(--cyan);
+  margin-bottom:12px;
 }
 
-.group-card li {
-  margin: 8px 0;
+.group-card .count {
+  float:right;
+  color:var(--lime);
+}
+
+.member {
+  padding:9px 11px;
+  margin:6px 0;
+  background:#2a1b3b;
+  border-radius:8px;
+  border-left:3px solid var(--pink);
+}
+
+.empty {
+  color:#766b89;
+  font-size:13px;
+}
+
+.results-section {
+  margin-top:22px;
 }
 
 footer {
-  text-align: center;
-
-  color: #77718e;
-  font-size: 12px;
-
-  margin-top: 25px;
+  text-align:center;
+  margin-top:30px;
+  color:#746681;
+  font-size:12px;
 }
 
-/* MOBILE */
+@media(max-width:850px) {
+  .dashboard {
+    grid-template-columns:1fr;
+  }
 
-@media (max-width: 500px) {
   body {
-    padding: 12px;
+    padding:12px;
   }
 
   .panel {
-    padding: 15px;
-  }
-
-  .spin-button {
-    width: 82px;
-    height: 82px;
-  }
-
-  .spin-emoji {
-    font-size: 48px;
-  }
-
-  .floating-cat {
-    font-size: 24px;
+    padding:16px;
   }
 }
 </style>
@@ -365,63 +433,84 @@ footer {
 <div class="container">
 
 <header>
-  <h1>🐱 Spin & Split</h1>
-  <p>Neon Cat Edition</p>
+  <div class="logo">SPIN <span>&</span> SPLIT</div>
+  <div class="badge">✦ NEON CAT EDITION ✦</div>
 </header>
 
-<!-- PEMBAGIAN KELOMPOK -->
+<div class="dashboard">
 
-<section class="panel">
+<section class="panel wheel-panel">
 
-  <h2 class="panel-title">
-    <span class="floating-cat">🐱</span>
-    Pembagian Kelompok
-    <span class="floating-cat">🐱</span>
-  </h2>
+  <h2 class="panel-title">🎡 Pembagian Kelompok</h2>
 
   <div class="wheel-area">
+    <div class="pointer"></div>
+    <canvas id="wheel" width="700" height="700"></canvas>
 
-    <div class="pointer">▼</div>
-
-    <canvas id="wheel" width="600" height="600"></canvas>
-
-    <!-- EMOJI TENGAH RODA -->
-
-    <button class="spin-button" id="spinBtn">
-      <span class="spin-emoji">🐱</span>
-    </button>
-
+    <!-- Emoji kucing menggantikan teks SPIN -->
+    <div class="wheel-center">
+      <span>🐱</span>
+    </div>
   </div>
 
-  <div class="button-row">
-
-    <button class="primary" id="spinAction">
-      🎡 Putar & Bagi Kelompok
-    </button>
-
-    <button class="secondary" id="resetBtn">
-      🔄 Reset
-    </button>
-
+  <div class="result-name" id="winner">
+    Siapa berikutnya?
   </div>
 
   <div class="status" id="status">
-    Siap melakukan undian! 😺
+    Siap memulai undian!
+  </div>
+
+  <button class="primary-btn" id="spinBtn">
+    🎲 SPIN SEKARANG
+  </button>
+
+  <div class="controls">
+    <button class="secondary-btn" id="soundBtn">
+      🔊 Suara ON
+    </button>
+
+    <button class="secondary-btn danger-btn" id="resetBtn">
+      ↻ Reset
+    </button>
+  </div>
+
+  <div class="volume-control">
+    <label for="volumeSlider">🔊 Volume Spin</label>
+
+    <input
+      type="range"
+      id="volumeSlider"
+      min="0"
+      max="1"
+      step="0.05"
+      value="0.65"
+    >
+
+    <span id="volumeValue">65%</span>
   </div>
 
 </section>
 
-<!-- PENGATURAN -->
-
 <section class="panel">
 
-  <h2 class="panel-title">⚙️ Pengaturan</h2>
+  <h2 class="panel-title">⚙️ Pengaturan Kelompok</h2>
 
-  <label for="participants">
-    Daftar peserta (satu nama per baris)
-  </label>
+  <div class="form-group">
+    <label for="groupCount">Jumlah kelompok</label>
+    <input
+      type="number"
+      id="groupCount"
+      min="2"
+      max="20"
+      value="2"
+    >
+  </div>
 
-  <textarea id="participants" rows="8">Anto
+  <div class="form-group">
+    <label for="names">Daftar peserta</label>
+
+    <textarea id="names">Anto
 Alfin
 Juni
 Eka
@@ -430,128 +519,131 @@ Ririn
 Lia
 Feni</textarea>
 
-  <label for="groupCount">
-    Jumlah kelompok
-  </label>
-
-  <input
-    type="number"
-    id="groupCount"
-    min="2"
-    max="20"
-    value="2"
-  >
-
-  <div class="button-row">
-
-    <button class="primary" id="applyBtn">
-      Terapkan Pengaturan
-    </button>
-
+    <div class="info">Satu nama per baris.</div>
   </div>
 
-  <label>
-    <input type="checkbox" id="soundToggle" checked>
-    🔊 Efek suara
-  </label>
+  <button class="secondary-btn" id="applyBtn">
+    ✓ Terapkan Pengaturan
+  </button>
 
-  <label for="volume">
-    🔉 Volume: <span id="volumeValue">65%</span>
-  </label>
+  <div class="form-group" style="margin-top:20px">
+    <label>Aturan khusus Anto & Eka</label>
 
-  <input
-    type="range"
-    id="volume"
-    min="0"
-    max="100"
-    value="65"
-  >
+    <div class="info">
+      Kapasitas maksimal 4 orang: 98% berbeda kelompok.<br>
+      Kapasitas 5 orang atau lebih: peluang berbeda kelompok 50%.<br>
+      Peserta lainnya tetap acak.
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <span>Peserta tersisa</span>
+    <strong id="remaining">8</strong>
+  </div>
+
+  <div class="toggle-row">
+    <span>Undian selesai</span>
+    <strong id="progress">0 / 8</strong>
+  </div>
 
 </section>
 
-<!-- HASIL -->
+</div>
 
-<section class="panel">
+<section class="panel results-section">
 
-  <h2 class="panel-title">
-    🏆 Hasil Pembagian
-  </h2>
+  <h2 class="panel-title">🏆 Hasil Pembagian Kelompok</h2>
 
-  <div id="results" class="results">
-    <p>Hasil kelompok akan muncul di sini.</p>
-  </div>
+  <div id="groups" class="group-grid"></div>
 
-  <div class="button-row">
-
-    <button class="primary" id="copyBtn">
-      📋 Salin Hasil
+  <div class="controls">
+    <button class="secondary-btn" id="copyBtn">
+      📋 Salin hasil
     </button>
-
   </div>
 
 </section>
 
 <footer>
-  Spin & Split — Neon Cat Edition
+  Spin & Split — Neon Cat Edition ✦ Made for fun
 </footer>
 
 </div>
 
 <script>
-
 /* ELEMENTS */
 
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
 const spinBtn = document.getElementById("spinBtn");
-const spinAction = document.getElementById("spinAction");
-
 const resetBtn = document.getElementById("resetBtn");
 const applyBtn = document.getElementById("applyBtn");
+const soundBtn = document.getElementById("soundBtn");
 const copyBtn = document.getElementById("copyBtn");
 
-const participantsInput =
-  document.getElementById("participants");
+const namesInput = document.getElementById("names");
+const groupCountInput = document.getElementById("groupCount");
 
-const groupCountInput =
-  document.getElementById("groupCount");
+const winnerDisplay = document.getElementById("winner");
+const statusDisplay = document.getElementById("status");
 
-const soundToggle =
-  document.getElementById("soundToggle");
+const remainingDisplay = document.getElementById("remaining");
+const progressDisplay = document.getElementById("progress");
+const groupsDisplay = document.getElementById("groups");
 
-const volumeSlider =
-  document.getElementById("volume");
+const volumeSlider = document.getElementById("volumeSlider");
+const volumeValue = document.getElementById("volumeValue");
 
-const volumeValue =
-  document.getElementById("volumeValue");
+/* COLORS */
 
-const statusDisplay =
-  document.getElementById("status");
+const colors = [
+  "#a855f7",
+  "#ff4fd8",
+  "#37eaff",
+  "#c8ff46",
+  "#7c3aed",
+  "#f97316",
+  "#06b6d4",
+  "#e879f9",
+  "#84cc16",
+  "#6366f1"
+];
 
-const resultsDisplay =
-  document.getElementById("results");
-
-
-/* VARIABLES */
+/* GAME STATE */
 
 let participants = [];
+let remaining = [];
 let groups = [];
+let capacities = [];
 
+let totalParticipants = 0;
+let groupCount = 2;
 let drawnCount = 0;
-let isSpinning = false;
 
+let spinning = false;
+let soundEnabled = true;
+let audioContext = null;
 let rotation = 0;
+
+/* AUDIO SETTINGS */
+
+let volumeLevel = 0.65;
+let tickTimer = null;
+let spinStartTime = 0;
 
 const spinDuration = 5000;
 
-let audioContext = null;
+volumeSlider.addEventListener("input", () => {
+  volumeLevel = Number(volumeSlider.value);
 
+  volumeValue.textContent =
+    Math.round(volumeLevel * 100) + "%";
+});
 
-/* SOUND */
+/* AUDIO ENGINE */
 
-function getAudioContext() {
-
+function initAudio() {
   if (!audioContext) {
     audioContext = new (
       window.AudioContext ||
@@ -562,114 +654,301 @@ function getAudioContext() {
   if (audioContext.state === "suspended") {
     audioContext.resume();
   }
-
-  return audioContext;
 }
 
-function playTick(
-  frequency = 600,
-  duration = 0.04
-) {
+function tone(freq = 600, duration = 0.1, intensity = 1) {
+  if (!soundEnabled || volumeLevel <= 0) return;
 
-  if (!soundToggle.checked) return;
+  try {
+    initAudio();
 
-  const audio = getAudioContext();
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
-  const oscillator = audio.createOscillator();
-  const gain = audio.createGain();
+    osc.type = "triangle";
+    osc.frequency.value = freq;
 
-  const volume =
-    Number(volumeSlider.value) / 100;
+    const actualVolume = Math.min(
+      1,
+      volumeLevel * intensity
+    );
 
-  oscillator.type = "triangle";
+    gain.gain.setValueAtTime(
+      actualVolume,
+      audioContext.currentTime
+    );
 
-  oscillator.frequency.value = frequency;
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioContext.currentTime + duration
+    );
 
-  gain.gain.setValueAtTime(
-    volume * 0.12,
-    audio.currentTime
-  );
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
 
-  gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audio.currentTime + duration
-  );
+    osc.start();
+    osc.stop(audioContext.currentTime + duration);
 
-  oscillator.connect(gain);
-  gain.connect(audio.destination);
+  } catch (error) {
+    console.log("Audio error:", error);
+  }
+}
 
-  oscillator.start();
+/* SPIN TICK SOUND */
 
-  oscillator.stop(
-    audio.currentTime + duration
+function playTick() {
+  if (!soundEnabled || !spinning) return;
+
+  tone(
+    850 + Math.random() * 350,
+    0.045,
+    0.9
   );
 }
 
-function playWinnerSound() {
+function startSpinSound() {
+  stopSpinSound();
 
-  if (!soundToggle.checked) return;
+  spinStartTime = performance.now();
 
-  playTick(700, 0.15);
+  function tickLoop() {
+    if (!spinning || !soundEnabled) return;
 
-  setTimeout(() => {
-    playTick(900, 0.2);
-  }, 120);
+    const elapsed = performance.now() - spinStartTime;
 
-  setTimeout(() => {
-    playTick(1100, 0.25);
-  }, 250);
+    const progress = Math.min(
+      elapsed / spinDuration,
+      1
+    );
+
+    playTick();
+
+    /*
+      Interval bertambah saat roda melambat.
+      Awal cepat, akhir lebih lambat.
+    */
+
+    const interval =
+      65 + Math.pow(progress, 2.5) * 450;
+
+    tickTimer = setTimeout(tickLoop, interval);
+  }
+
+  tickLoop();
 }
 
+function stopSpinSound() {
+  if (tickTimer) {
+    clearTimeout(tickTimer);
+    tickTimer = null;
+  }
+}
 
-/* READ PARTICIPANTS */
+/* SOUND BUTTON */
 
-function readParticipants() {
+soundBtn.onclick = () => {
+  soundEnabled = !soundEnabled;
 
-  return participantsInput.value
+  soundBtn.textContent = soundEnabled
+    ? "🔊 Suara ON"
+    : "🔇 Suara OFF";
+
+  if (!soundEnabled) {
+    stopSpinSound();
+  } else {
+    tone(700, 0.15);
+  }
+};
+
+/* SHUFFLE */
+
+function shuffle(arr) {
+  arr = [...arr];
+
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+
+  return arr;
+}
+
+/* NAMES */
+
+function getNames() {
+  return namesInput.value
     .split("\n")
-    .map(name => name.trim())
-    .filter(name => name.length > 0);
-
+    .map(n => n.trim())
+    .filter(Boolean);
 }
 
+function updateProgress() {
+  remainingDisplay.textContent = remaining.length;
 
-/* DRAW WHEEL */
+  progressDisplay.textContent =
+    `${drawnCount} / ${totalParticipants}`;
+}
+
+/* GROUP CREATION */
+
+function createGroups() {
+  groups = Array.from(
+    { length: groupCount },
+    (_, i) => ({
+      name: `Kelompok ${i + 1}`,
+      members: []
+    })
+  );
+
+  const base = Math.floor(
+    totalParticipants / groupCount
+  );
+
+  const extra = totalParticipants % groupCount;
+
+  capacities = Array(groupCount).fill(base);
+
+  shuffle(
+    Array.from({ length: groupCount }, (_, i) => i)
+  )
+    .slice(0, extra)
+    .forEach(i => capacities[i]++);
+
+  renderGroups();
+}
+
+/* AVAILABLE GROUPS */
+
+function availableGroups() {
+  return groups
+    .map((g, i) => ({
+      index: i,
+      slots: capacities[i] - g.members.length
+    }))
+    .filter(g => g.slots > 0);
+}
+
+/* RANDOM GROUP */
+
+function randomGroup() {
+  const available = availableGroups();
+
+  if (!available.length) return -1;
+
+  const totalSlots = available.reduce(
+    (sum, g) => sum + g.slots,
+    0
+  );
+
+  let r = Math.random() * totalSlots;
+
+  for (const g of available) {
+    r -= g.slots;
+
+    if (r < 0) return g.index;
+  }
+
+  return available[available.length - 1].index;
+}
+
+/* ANTO & EKA SPECIAL RULE */
+
+function specialProbability() {
+  return capacities.some(size => size >= 5)
+    ? 0.5
+    : 0.98;
+}
+
+function chooseGroup(name) {
+  const normalized = name.toLowerCase();
+
+  if (normalized !== "anto" && normalized !== "eka") {
+    return randomGroup();
+  }
+
+  const other = normalized === "anto"
+    ? "eka"
+    : "anto";
+
+  const otherGroup = groups.findIndex(g =>
+    g.members.some(m => m.toLowerCase() === other)
+  );
+
+  if (otherGroup === -1) {
+    return randomGroup();
+  }
+
+  const available = availableGroups();
+
+  const same = available.find(
+    g => g.index === otherGroup
+  );
+
+  const different = available.filter(
+    g => g.index !== otherGroup
+  );
+
+  if (!same) {
+    return different.length
+      ? different[
+          Math.floor(Math.random() * different.length)
+        ].index
+      : -1;
+  }
+
+  if (!different.length) {
+    return same.index;
+  }
+
+  if (Math.random() < specialProbability()) {
+    return different[
+      Math.floor(Math.random() * different.length)
+    ].index;
+  }
+
+  return same.index;
+}
+
+/* WHEEL DRAWING */
 
 function drawWheel() {
-
   const size = canvas.width;
-
   const center = size / 2;
-
-  const radius = size / 2 - 8;
+  const radius = center - 8;
 
   ctx.clearRect(0, 0, size, size);
 
-  if (participants.length === 0) return;
+  if (!remaining.length) {
+    ctx.beginPath();
 
-  const slice =
-    (Math.PI * 2) / participants.length;
+    ctx.arc(
+      center,
+      center,
+      radius,
+      0,
+      Math.PI * 2
+    );
 
-  const colors = [
-    "#a855f7",
-    "#ec4899",
-    "#06b6d4",
-    "#7c3aed",
-    "#f472b6",
-    "#0891b2",
-    "#9333ea",
-    "#db2777"
-  ];
+    ctx.fillStyle = "#211332";
+    ctx.fill();
 
-  participants.forEach((name, index) => {
+    ctx.fillStyle = "white";
+    ctx.font = "bold 30px Arial";
+    ctx.textAlign = "center";
 
-    const start =
-      rotation + index * slice;
+    ctx.fillText("SELESAI", center, center);
 
+    return;
+  }
+
+  const slice = 2 * Math.PI / remaining.length;
+
+  remaining.forEach((name, i) => {
+    const start = i * slice - Math.PI / 2;
     const end = start + slice;
 
     ctx.beginPath();
-
     ctx.moveTo(center, center);
 
     ctx.arc(
@@ -682,519 +961,811 @@ function drawWheel() {
 
     ctx.closePath();
 
-    ctx.fillStyle =
-      colors[index % colors.length];
-
+    ctx.fillStyle = colors[i % colors.length];
     ctx.fill();
 
-    ctx.strokeStyle = "#ffffff55";
+    ctx.strokeStyle = "#fff";
     ctx.lineWidth = 3;
-
     ctx.stroke();
 
     ctx.save();
 
     ctx.translate(center, center);
-
     ctx.rotate(start + slice / 2);
 
     ctx.textAlign = "right";
-    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+    ctx.font = "bold 24px Arial";
 
-    ctx.fillStyle = "#ffffff";
+    const display = name.length > 16
+      ? name.slice(0, 14) + "..."
+      : name;
 
-    ctx.font = "bold 22px Arial";
-
-    let displayName = name;
-
-    if (displayName.length > 15) {
-      displayName =
-        displayName.slice(0, 13) + "...";
-    }
-
-    ctx.fillText(
-      displayName,
-      radius - 25,
-      0
-    );
+    ctx.fillText(display, radius - 25, 8);
 
     ctx.restore();
-
   });
-
-  /* CENTER DECORATION */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    center,
-    center,
-    65,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.fillStyle = "#160d2b";
-
-  ctx.fill();
-
-  ctx.strokeStyle = "#ff4fd8";
-  ctx.lineWidth = 5;
-
-  ctx.stroke();
-
 }
-
-
-/* SHUFFLE */
-
-function shuffle(array) {
-
-  const result = [...array];
-
-  for (
-    let i = result.length - 1;
-    i > 0;
-    i--
-  ) {
-
-    const j =
-      Math.floor(Math.random() * (i + 1));
-
-    [result[i], result[j]] =
-      [result[j], result[i]];
-
-  }
-
-  return result;
-
-}
-
-
-/* GROUP SPLITTING */
-
-function splitGroups() {
-
-  const count =
-    Number(groupCountInput.value);
-
-  if (count < 2 || count > 20) {
-
-    alert(
-      "Jumlah kelompok harus antara 2 sampai 20."
-    );
-
-    return false;
-  }
-
-  if (participants.length < count) {
-
-    alert(
-      "Jumlah peserta harus minimal sama dengan jumlah kelompok."
-    );
-
-    return false;
-  }
-
-  groups = [];
-
-  for (let i = 0; i < count; i++) {
-
-    groups.push({
-
-      name: `Kelompok ${i + 1}`,
-
-      members: []
-
-    });
-
-  }
-
-  let shuffled = shuffle(participants);
-
-  /*
-    ATURAN KHUSUS ANTO DAN EKA
-
-    Kapasitas kelompok >= 5:
-    peluang pemisahan 50%.
-
-    Kapasitas kelompok < 5:
-    peluang pemisahan 98%.
-  */
-
-  const hasCapacityFiveOrMore =
-    Math.ceil(participants.length / count) >= 5;
-
-  const separationChance =
-    hasCapacityFiveOrMore ? 0.50 : 0.98;
-
-  const anto = shuffled.find(
-    name => name.toLowerCase() === "anto"
-  );
-
-  const eka = shuffled.find(
-    name => name.toLowerCase() === "eka"
-  );
-
-  if (
-    anto &&
-    eka &&
-    Math.random() < separationChance
-  ) {
-
-    const antoIndex =
-      shuffled.indexOf(anto);
-
-    const ekaIndex =
-      shuffled.indexOf(eka);
-
-    if (
-      Math.floor(antoIndex / count) ===
-      Math.floor(ekaIndex / count)
-    ) {
-
-      const otherIndex =
-        shuffled.findIndex(
-          (name, index) =>
-            index !== ekaIndex &&
-            Math.floor(index / count) !==
-            Math.floor(antoIndex / count)
-        );
-
-      if (otherIndex !== -1) {
-
-        [
-          shuffled[ekaIndex],
-          shuffled[otherIndex]
-        ] = [
-          shuffled[otherIndex],
-          shuffled[ekaIndex]
-        ];
-
-      }
-
-    }
-
-  }
-
-  /* DISTRIBUSI MERATA */
-
-  shuffled.forEach((name, index) => {
-
-    groups[index % count].members.push(name);
-
-  });
-
-  return true;
-
-}
-
-
-/* DISPLAY RESULTS */
-
-function displayResults() {
-
-  resultsDisplay.innerHTML = "";
-
-  groups.forEach(group => {
-
-    const card =
-      document.createElement("div");
-
-    card.className = "group-card";
-
-    const title =
-      document.createElement("h3");
-
-    title.textContent = group.name;
-
-    const list =
-      document.createElement("ol");
-
-    group.members.forEach(member => {
-
-      const item =
-        document.createElement("li");
-
-      item.textContent = member;
-
-      list.appendChild(item);
-
-    });
-
-    card.appendChild(title);
-    card.appendChild(list);
-
-    resultsDisplay.appendChild(card);
-
-  });
-
-}
-
 
 /* SPIN */
 
 function spin() {
+  if (spinning || !remaining.length) return;
 
-  if (isSpinning) return;
-
-  participants = readParticipants();
-
-  if (participants.length < 2) {
-
-    alert("Masukkan minimal 2 peserta.");
-
-    return;
-  }
-
-  if (!splitGroups()) return;
-
-  isSpinning = true;
-
-  spinBtn.classList.add("spinning");
-
+  spinning = true;
   spinBtn.disabled = true;
-  spinAction.disabled = true;
+
+  const index = Math.floor(
+    Math.random() * remaining.length
+  );
+
+  const selected = remaining[index];
+
+  const slice = 360 / remaining.length;
+
+  const target =
+    360 * 6 +
+    (360 - index * slice - slice / 2);
+
+  rotation += target;
+
+  canvas.style.transition =
+    "transform 5s cubic-bezier(.12,.75,.08,1)";
+
+  canvas.style.transform =
+    `rotate(${rotation}deg)`;
 
   statusDisplay.textContent =
-    "Roda sedang berputar... 😺";
+    "Roda sedang berputar...";
 
-  resultsDisplay.innerHTML =
-    "<p>Menentukan kelompok...</p>";
+  startSpinSound();
 
-  const startRotation = rotation;
+  setTimeout(() => {
+    stopSpinSound();
 
-  const extraRotation =
-    Math.PI * 2 * (6 + Math.random() * 5);
+    remaining.splice(
+      remaining.indexOf(selected),
+      1
+    );
 
-  const startTime = performance.now();
+    const groupIndex = chooseGroup(selected);
 
-  let lastTick = 0;
+    if (groupIndex >= 0) {
+      groups[groupIndex].members.push(selected);
+    }
 
-  function animate(now) {
+    drawnCount++;
 
-    const elapsed =
-      now - startTime;
+    winnerDisplay.textContent = selected;
 
-    const progress =
-      Math.min(elapsed / spinDuration, 1);
+    statusDisplay.textContent = groupIndex >= 0
+      ? `${selected} masuk ${groups[groupIndex].name}!`
+      : "Undian selesai.";
 
-    /* RODA MELAMBAT SECARA ALAMI */
+    /* WINNER SOUND */
 
-    const eased =
-      1 - Math.pow(1 - progress, 4);
+    tone(700, 0.2, 1);
 
-    rotation =
-      startRotation +
-      extraRotation * eased;
+    setTimeout(() => {
+      tone(1000, 0.25, 1);
+    }, 150);
 
     drawWheel();
+    renderGroups();
+    updateProgress();
 
-    /* SOUND */
+    spinning = false;
 
-    const tickInterval =
-      45 + progress * 250;
+    spinBtn.disabled = remaining.length === 0;
 
-    if (now - lastTick > tickInterval) {
-
-      playTick(
-        500 + Math.random() * 300
-      );
-
-      lastTick = now;
-
+    if (!remaining.length) {
+      statusDisplay.textContent =
+        "🎉 Semua peserta berhasil dibagi!";
     }
 
-    if (progress < 1) {
-
-      requestAnimationFrame(animate);
-
-    } else {
-
-      finishSpin();
-
-    }
-
-  }
-
-  requestAnimationFrame(animate);
-
+  }, 5100);
 }
 
+/* HTML ESCAPE */
 
-/* FINISH SPIN */
-
-function finishSpin() {
-
-  isSpinning = false;
-
-  spinBtn.classList.remove("spinning");
-
-  spinBtn.disabled = false;
-  spinAction.disabled = false;
-
-  drawnCount++;
-
-  displayResults();
-
-  playWinnerSound();
-
-  statusDisplay.textContent =
-    "Undian selesai! Selamat untuk semua kelompok 🎉";
-
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[c]);
 }
 
+/* GROUP DISPLAY */
+
+function renderGroups() {
+  groupsDisplay.innerHTML = "";
+
+  groups.forEach((group, i) => {
+    const card = document.createElement("div");
+
+    card.className = "group-card";
+
+    const members = group.members.length
+      ? group.members
+          .map(m => `<div class="member">${escapeHTML(m)}</div>`)
+          .join("")
+      : `<div class="empty">Belum ada anggota</div>`;
+
+    card.innerHTML = `
+      <h3>
+        ${group.name}
+        <span class="count">
+          ${group.members.length}/${capacities[i]}
+        </span>
+      </h3>
+      ${members}
+    `;
+
+    groupsDisplay.appendChild(card);
+  });
+}
 
 /* APPLY SETTINGS */
 
 function applySettings() {
+  if (spinning) return;
 
-  participants = readParticipants();
+  const inputNames = getNames();
+  const unique = [];
 
-  const count =
-    Number(groupCountInput.value);
+  inputNames.forEach(name => {
+    if (!unique.some(
+      n => n.toLowerCase() === name.toLowerCase()
+    )) {
+      unique.push(name);
+    }
+  });
 
-  if (participants.length < 2) {
+  const count = Number(groupCountInput.value);
 
+  if (unique.length < 2) {
     alert("Masukkan minimal 2 peserta.");
-
     return;
   }
 
-  if (count < 2 || count > 20) {
-
-    alert(
-      "Jumlah kelompok harus antara 2 sampai 20."
-    );
-
+  if (
+    !Number.isInteger(count) ||
+    count < 2 ||
+    count > 20 ||
+    count > unique.length
+  ) {
+    alert("Jumlah kelompok tidak valid.");
     return;
   }
 
-  if (count > participants.length) {
+  participants = unique;
+  remaining = [...participants];
 
-    alert(
-      "Jumlah kelompok tidak boleh melebihi peserta."
-    );
-
-    return;
-  }
-
-  groups = [];
-
-  resultsDisplay.innerHTML =
-    "<p>Pengaturan berhasil diterapkan.</p>";
-
+  totalParticipants = participants.length;
+  groupCount = count;
+  drawnCount = 0;
   rotation = 0;
 
-  drawWheel();
+  canvas.style.transition = "none";
+  canvas.style.transform = "rotate(0deg)";
 
+  winnerDisplay.textContent = "Siapa  */
+
+let volumeLevel = 0.65;
+let tickTimer = null;
+let spinStartTime = 0;
+
+const spinDuration = 5000;
+
+volumeSlider.addEventListener("input", () => {
+  volumeLevel = Number(volumeSlider.value);
+
+  volumeValue.textContent =
+    Math.round(volumeLevel * 100) + "%";
+});
+
+/* AUDIO ENGINE */
+
+function initAudio() {
+  if (!audioContext) {
+    audioContext = new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
+  }
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
+}
+
+function tone(freq = 600, duration = 0.1, intensity = 1) {
+  if (!soundEnabled || volumeLevel <= 0) return;
+
+  try {
+    initAudio();
+
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    osc.type = "triangle";
+    osc.frequency.value = freq;
+
+    const actualVolume = Math.min(
+      1,
+      volumeLevel * intensity
+    );
+
+    gain.gain.setValueAtTime(
+      actualVolume,
+      audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioContext.currentTime + duration
+    );
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.start();
+    osc.stop(audioContext.currentTime + duration);
+
+  } catch (error) {
+    console.log("Audio error:", error);
+  }
+}
+
+/* SPIN TICK SOUND */
+
+function playTick() {
+  if (!soundEnabled || !spinning) return;
+
+  tone(
+    850 + Math.random() * 350,
+    0.045,
+    0.9
+  );
+}
+
+function startSpinSound() {
+  stopSpinSound();
+
+  spinStartTime = performance.now();
+
+  function tickLoop() {
+    if (!spinning || !soundEnabled) return;
+
+    const elapsed = performance.now() - spinStartTime;
+
+    const progress = Math.min(
+      elapsed / spinDuration,
+      1
+    );
+
+    playTick();
+
+    /*
+      Interval bertambah saat roda melambat.
+      Awal cepat, akhir lebih lambat.
+    */
+
+    const interval =
+      65 + Math.pow(progress, 2.5) * 450;
+
+    tickTimer = setTimeout(tickLoop, interval);
+  }
+
+  tickLoop();
+}
+
+function stopSpinSound() {
+  if (tickTimer) {
+    clearTimeout(tickTimer);
+    tickTimer = null;
+  }
+}
+
+/* SOUND BUTTON */
+
+soundBtn.onclick = () => {
+  soundEnabled = !soundEnabled;
+
+  soundBtn.textContent = soundEnabled
+    ? "🔊 Suara ON"
+    : "🔇 Suara OFF";
+
+  if (!soundEnabled) {
+    stopSpinSound();
+  } else {
+    tone(700, 0.15);
+  }
+};
+
+/* SHUFFLE */
+
+function shuffle(arr) {
+  arr = [...arr];
+
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+
+  return arr;
+}
+
+/* NAMES */
+
+function getNames() {
+  return namesInput.value
+    .split("\n")
+    .map(n => n.trim())
+    .filter(Boolean);
+}
+
+function updateProgress() {
+  remainingDisplay.textContent = remaining.length;
+
+  progressDisplay.textContent =
+    `${drawnCount} / ${totalParticipants}`;
+}
+
+/* GROUP CREATION */
+
+function createGroups() {
+  groups = Array.from(
+    { length: groupCount },
+    (_, i) => ({
+      name: `Kelompok ${i + 1}`,
+      members: []
+    })
+  );
+
+  const base = Math.floor(
+    totalParticipants / groupCount
+  );
+
+  const extra = totalParticipants % groupCount;
+
+  capacities = Array(groupCount).fill(base);
+
+  shuffle(
+    Array.from({ length: groupCount }, (_, i) => i)
+  )
+    .slice(0, extra)
+    .forEach(i => capacities[i]++);
+
+  renderGroups();
+}
+
+/* AVAILABLE GROUPS */
+
+function availableGroups() {
+  return groups
+    .map((g, i) => ({
+      index: i,
+      slots: capacities[i] - g.members.length
+    }))
+    .filter(g => g.slots > 0);
+}
+
+/* RANDOM GROUP */
+
+function randomGroup() {
+  const available = availableGroups();
+
+  if (!available.length) return -1;
+
+  const totalSlots = available.reduce(
+    (sum, g) => sum + g.slots,
+    0
+  );
+
+  let r = Math.random() * totalSlots;
+
+  for (const g of available) {
+    r -= g.slots;
+
+    if (r < 0) return g.index;
+  }
+
+  return available[available.length - 1].index;
+}
+
+/* ANTO & EKA SPECIAL RULE */
+
+function specialProbability() {
+  return capacities.some(size => size >= 5)
+    ? 0.5
+    : 0.98;
+}
+
+function chooseGroup(name) {
+  const normalized = name.toLowerCase();
+
+  if (normalized !== "anto" && normalized !== "eka") {
+    return randomGroup();
+  }
+
+  const other = normalized === "anto"
+    ? "eka"
+    : "anto";
+
+  const otherGroup = groups.findIndex(g =>
+    g.members.some(m => m.toLowerCase() === other)
+  );
+
+  if (otherGroup === -1) {
+    return randomGroup();
+  }
+
+  const available = availableGroups();
+
+  const same = available.find(
+    g => g.index === otherGroup
+  );
+
+  const different = available.filter(
+    g => g.index !== otherGroup
+  );
+
+  if (!same) {
+    return different.length
+      ? different[
+          Math.floor(Math.random() * different.length)
+        ].index
+      : -1;
+  }
+
+  if (!different.length) {
+    return same.index;
+  }
+
+  if (Math.random() < specialProbability()) {
+    return different[
+      Math.floor(Math.random() * different.length)
+    ].index;
+  }
+
+  return same.index;
+}
+
+/* WHEEL DRAWING */
+
+function drawWheel() {
+  const size = canvas.width;
+  const center = size / 2;
+  const radius = center - 8;
+
+  ctx.clearRect(0, 0, size, size);
+
+  if (!remaining.length) {
+    ctx.beginPath();
+
+    ctx.arc(
+      center,
+      center,
+      radius,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fillStyle = "#211332";
+    ctx.fill();
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 30px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText("SELESAI", center, center);
+
+    return;
+  }
+
+  const slice = 2 * Math.PI / remaining.length;
+
+  remaining.forEach((name, i) => {
+    const start = i * slice - Math.PI / 2;
+    const end = start + slice;
+
+    ctx.beginPath();
+    ctx.moveTo(center, center);
+
+    ctx.arc(
+      center,
+      center,
+      radius,
+      start,
+      end
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.save();
+
+    ctx.translate(center, center);
+    ctx.rotate(start + slice / 2);
+
+    ctx.textAlign = "right";
+    ctx.fillStyle = "white";
+    ctx.font = "bold 24px Arial";
+
+    const display = name.length > 16
+      ? name.slice(0, 14) + "..."
+      : name;
+
+    ctx.fillText(display, radius - 25, 8);
+
+    ctx.restore();
+  });
+}
+
+/* SPIN */
+
+function spin() {
+  if (spinning || !remaining.length) return;
+
+  spinning = true;
+  spinBtn.disabled = true;
+
+  const index = Math.floor(
+    Math.random() * remaining.length
+  );
+
+  const selected = remaining[index];
+
+  const slice = 360 / remaining.length;
+
+  const target =
+    360 * 6 +
+    (360 - index * slice - slice / 2);
+
+  rotation += target;
+
+  canvas.style.transition =
+    "transform 5s cubic-bezier(.12,.75,.08,1)";
+
+  canvas.style.transform =
+    `rotate(${rotation}deg)`;
+
+  statusDisplay.textContent =
+    "Roda sedang berputar...";
+
+  startSpinSound();
+
+  setTimeout(() => {
+    stopSpinSound();
+
+    remaining.splice(
+      remaining.indexOf(selected),
+      1
+    );
+
+    const groupIndex = chooseGroup(selected);
+
+    if (groupIndex >= 0) {
+      groups[groupIndex].members.push(selected);
+    }
+
+    drawnCount++;
+
+    winnerDisplay.textContent = selected;
+
+    statusDisplay.textContent = groupIndex >= 0
+      ? `${selected} masuk ${groups[groupIndex].name}!`
+      : "Undian selesai.";
+
+    /* WINNER SOUND */
+
+    tone(700, 0.2, 1);
+
+    setTimeout(() => {
+      tone(1000, 0.25, 1);
+    }, 150);
+
+    drawWheel();
+    renderGroups();
+    updateProgress();
+
+    spinning = false;
+
+    spinBtn.disabled = remaining.length === 0;
+
+    if (!remaining.length) {
+      statusDisplay.textContent =
+        "🎉 Semua peserta berhasil dibagi!";
+    }
+
+  }, 5100);
+}
+
+/* HTML ESCAPE */
+
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[c]);
+}
+
+/* GROUP DISPLAY */
+
+function renderGroups() {
+  groupsDisplay.innerHTML = "";
+
+  groups.forEach((group, i) => {
+    const card = document.createElement("div");
+
+    card.className = "group-card";
+
+    const members = group.members.length
+      ? group.members
+          .map(m => `<div class="member">${escapeHTML(m)}</div>`)
+          .join("")
+      : `<div class="empty">Belum ada anggota</div>`;
+
+    card.innerHTML = `
+      <h3>
+        ${group.name}
+        <span class="count">
+          ${group.members.length}/${capacities[i]}
+        </span>
+      </h3>
+      ${members}
+    `;
+
+    groupsDisplay.appendChild(card);
+  });
+}
+
+/* APPLY SETTINGS */
+
+function applySettings() {
+  if (spinning) return;
+
+  const inputNames = getNames();
+  const unique = [];
+
+  inputNames.forEach(name => {
+    if (!unique.some(
+      n => n.toLowerCase() === name.toLowerCase()
+    )) {
+      unique.push(name);
+    }
+  });
+
+  const count = Number(groupCountInput.value);
+
+  if (unique.length < 2) {
+    alert("Masukkan minimal 2 peserta.");
+    return;
+  }
+
+  if (
+    !Number.isInteger(count) ||
+    count < 2 ||
+    count > 20 ||
+    count > unique.length
+  ) {
+    alert("Jumlah kelompok tidak valid.");
+    return;
+  }
+
+  participants = unique;
+  remaining = [...participants];
+
+  totalParticipants = participants.length;
+  groupCount = count;
+  drawnCount = 0;
+  rotation = 0;
+
+  canvas.style.transition = "none";
+  canvas.style.transform = "rotate(0deg)";
+
+  winnerDisplay.textContent = "Siapa berikutnya?";
   statusDisplay.textContent =
     "Pengaturan berhasil diterapkan!";
 
-}
+  spinBtn.disabled = false;
 
+  createGroups();
+  drawWheel();
+  updateProgress();
+}
 
 /* RESET */
 
 function resetGame() {
+  if (spinning) return;
 
-  if (isSpinning) return;
+  stopSpinSound();
 
+  remaining = [...participants];
+  drawnCount = 0;
   rotation = 0;
 
-  groups = [];
+  canvas.style.transition = "none";
+  canvas.style.transform = "rotate(0deg)";
 
-  drawnCount = 0;
+  winnerDisplay.textContent = "Siapa berikutnya?";
+  statusDisplay.textContent = "Undian berhasil direset!";
 
-  spinBtn.classList.remove("spinning");
+  spinBtn.disabled = false;
 
-  resultsDisplay.innerHTML =
-    "<p>Hasil kelompok akan muncul di sini.</p>";
-
-  statusDisplay.textContent =
-    "Undian direset. Siap mulai lagi! 😺";
-
+  createGroups();
   drawWheel();
-
+  updateProgress();
 }
-
 
 /* COPY RESULTS */
 
 async function copyResults() {
-
   if (!drawnCount) {
-
     alert("Belum ada hasil undian.");
-
     return;
   }
 
-  let text =
-    "🎉 HASIL PEMBAGIAN KELOMPOK 🎉\n\n";
+  let text = "🎉 HASIL SPIN & SPLIT 🎉\n\n";
 
   groups.forEach(group => {
-
     text += group.name + ":\n";
 
     group.members.forEach((member, i) => {
-
       text += `${i + 1}. ${member}\n`;
-
     });
 
     text += "\n";
-
   });
 
   try {
-
     await navigator.clipboard.writeText(text);
 
     statusDisplay.textContent =
       "Hasil berhasil disalin!";
 
-  } catch (error) {
-
-    const area =
-      document.createElement("textarea");
+  } catch (e) {
+    const area = document.createElement("textarea");
 
     area.value = text;
 
     document.body.appendChild(area);
-
     area.select();
 
     document.execCommand("copy");
-
     area.remove();
 
     statusDisplay.textContent =
       "Hasil berhasil disalin!";
-
   }
-
 }
-
 
 /* BUTTON EVENTS */
 
 spinBtn.onclick = spin;
-
 resetBtn.onclick = resetGame;
-
 applyBtn.onclick = applySettings;
-
 copyBtn.onclick = copyResults;
-
-spinAction.onclick = spin;
-
 
 /* INITIALIZE */
 
 applySettings();
-
 </script>
 
 </body>
-  </html>
+</html>
